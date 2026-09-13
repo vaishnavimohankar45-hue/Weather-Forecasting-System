@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Weather Forecasting System</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>🌦️ Weather Forecasting System</h1>
+
+        <p class="subtitle">
+            Search weather for any city, town or village
+        </p>
+
+        <div class="search-box">
+
+            <input
+                type="text"
+                id="locationInput"
+                placeholder="Enter city, town or village..."
+            >
+
+            <button onclick="searchWeather()">
+                Search
+            </button>
+
+        </div>
+
+        <p id="errorMessage"></p>
+
+        <div id="weatherResult" class="weather-card">
+
+            <h2 id="locationName">Location</h2>
+
+            <p id="country"></p>
+
+            <div class="weather-info">
+
+                <div class="weather-item">
+                    <span>🌡️</span>
+                    <p>Temperature</p>
+                    <strong id="temperature">--</strong>
+                </div>
+
+                <div class="weather-item">
+                    <span>💧</span>
+                    <p>Humidity</p>
+                    <strong id="humidity">--</strong>
+                </div>
+
+                <div class="weather-item">
+                    <span>🌬️</span>
+                    <p>Wind Speed</p>
+                    <strong id="windSpeed">--</strong>
+                </div>
+
+                <div class="weather-item">
+                    <span>🌧️</span>
+                    <p>Current Rainfall</p>
+                    <strong id="currentRainfall">--</strong>
+                </div>
+
+                <div class="weather-item">
+                    <span>🤖</span>
+                    <p>Predicted Rainfall</p>
+                    <strong id="predictedRainfall">--</strong>
+                </div>
+
+                <div class="weather-item">
+                    <span>📊</span>
+                    <p>Pressure</p>
+                    <strong id="pressure">--</strong>
+                </div>
+
+            </div>
+
+            <div class="coordinates">
+
+                <p>
+                    📍 Latitude:
+                    <span id="latitude">--</span>
+                </p>
+
+                <p>
+                    📍 Longitude:
+                    <span id="longitude">--</span>
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

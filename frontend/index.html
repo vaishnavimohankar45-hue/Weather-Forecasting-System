@@ -12,96 +12,898 @@
 
 <body>
 
-    <div class="container">
+    <!-- ================= HEADER ================= -->
 
-        <h1>🌦️ Weather Forecasting System</h1>
+    <header class="top-header">
 
-        <p class="subtitle">
-            Search weather for any city, town or village
-        </p>
+        <div class="brand">
+            <div class="brand-icon">☁️</div>
 
-        <div class="search-box">
+            <div>
+                <h1>Weather<span>Wise</span></h1>
+                <p>Smart Weather Forecasting System</p>
+            </div>
+        </div>
 
-            <input
-                type="text"
-                id="locationInput"
-                placeholder="Enter city, town or village..."
-            >
+        <nav class="navigation">
 
-            <button onclick="searchWeather()">
-                Search
+            <button class="nav-btn">
+                🏠 Home
             </button>
 
-        </div>
+            <button class="nav-btn">
+                ⚙️ Settings
+            </button>
 
-        <p id="errorMessage"></p>
+            <button class="nav-btn">
+                ℹ️ About
+            </button>
 
-        <div id="weatherResult" class="weather-card">
+        </nav>
 
-            <h2 id="locationName">Location</h2>
+    </header>
 
-            <p id="country"></p>
 
-            <div class="weather-info">
+    <!-- ================= MAIN CONTAINER ================= -->
 
-                <div class="weather-item">
-                    <span>🌡️</span>
-                    <p>Temperature</p>
-                    <strong id="temperature">--</strong>
-                </div>
+    <main class="dashboard">
 
-                <div class="weather-item">
-                    <span>💧</span>
-                    <p>Humidity</p>
-                    <strong id="humidity">--</strong>
-                </div>
 
-                <div class="weather-item">
-                    <span>🌬️</span>
-                    <p>Wind Speed</p>
-                    <strong id="windSpeed">--</strong>
-                </div>
+        <!-- ================= SEARCH ================= -->
 
-                <div class="weather-item">
-                    <span>🌧️</span>
-                    <p>Current Rainfall</p>
-                    <strong id="currentRainfall">--</strong>
-                </div>
+        <div class="search-section">
 
-                <div class="weather-item">
-                    <span>🤖</span>
-                    <p>Predicted Rainfall</p>
-                    <strong id="predictedRainfall">--</strong>
-                </div>
+    <div class="search-box">
 
-                <div class="weather-item">
-                    <span>📊</span>
-                    <p>Pressure</p>
-                    <strong id="pressure">--</strong>
-                </div>
+        <input
+            type="text"
+            id="locationInput"
+            placeholder="Enter city or village..."
+            autocomplete="off"
+        >
 
-            </div>
+        <!-- Add Location -->
+        <button
+            class="add-btn"
+            onclick="addLocation()"
+            title="Add location"
+        >
+            ＋
+        </button>
 
-            <div class="coordinates">
-
-                <p>
-                    📍 Latitude:
-                    <span id="latitude">--</span>
-                </p>
-
-                <p>
-                    📍 Longitude:
-                    <span id="longitude">--</span>
-                </p>
-
-            </div>
-
-        </div>
+        <!-- Search -->
+        <button
+            class="search-btn"
+            onclick="searchWeather()"
+            title="Search weather"
+        >
+            🔍 Search
+        </button>
 
     </div>
 
-    <script src="script.js"></script>
+   
 
-</body>
+        <!-- ================= LOCATION HEADER ================= -->
 
-</html>
+         <!-- Current Location -->
+    <button
+        class="location-btn"
+        onclick="getCurrentLocation()"
+        title="Use your current location"
+    >
+        📍 Use My Location
+    </button>
+
+</div>
+
+<div id="errorMessage"></div>
+
+
+        <!-- ================= MAIN WEATHER ================= -->
+
+        <section class="main-weather-grid">
+
+
+            <!-- CURRENT WEATHER -->
+
+            <div class="current-weather-card">
+
+                <div class="weather-condition">
+
+                    <div class="weather-icon-large" id="weatherIcon">
+                        🌤️
+                    </div>
+
+                    <div>
+
+                        <p class="condition-label">
+                            CURRENT WEATHER
+                        </p>
+
+                        <h3 id="weatherCondition">
+                            Waiting for data
+                        </h3>
+
+                    </div>
+
+                </div>
+
+
+                <div class="temperature-area">
+
+                    <span id="temperature">
+                        --
+                    </span>
+
+                    <sup>°C</sup>
+
+                </div>
+
+
+                <p class="feels-like">
+                    Feels like <strong id="feelsLike">--°C</strong>
+                </p>
+
+
+                <div class="sun-info">
+
+                    <div>
+                        🌅
+                        <span>Sunrise</span>
+                        <strong id="sunrise">--</strong>
+                    </div>
+
+                    <div>
+                        🌇
+                        <span>Sunset</span>
+                        <strong id="sunset">--</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- WEATHER SUMMARY -->
+
+            <div class="weather-summary-card">
+
+                <div class="card-heading">
+
+                    <div>
+                        <p class="small-label">
+                            TODAY'S SUMMARY
+                        </p>
+
+                        <h3>Weather Overview</h3>
+                    </div>
+
+                    <span class="summary-icon">
+                        🌦️
+                    </span>
+
+                </div>
+
+
+                <div class="summary-grid">
+
+
+                    <div class="summary-item">
+
+                        <span>💧</span>
+
+                        <div>
+                            <p>Humidity</p>
+                            <strong id="humidity">-- %</strong>
+                        </div>
+
+                    </div>
+
+
+                    <div class="summary-item">
+
+                        <span>💨</span>
+
+                        <div>
+                            <p>Wind Speed</p>
+                            <strong id="windSpeed">-- km/h</strong>
+                        </div>
+
+                    </div>
+
+
+                    <div class="summary-item">
+
+                        <span>🌧️</span>
+
+                        <div>
+                            <p>Rainfall</p>
+                            <strong id="currentRainfall">-- mm</strong>
+                        </div>
+
+                    </div>
+
+
+                    <div class="summary-item">
+
+                        <span>🤖</span>
+
+                        <div>
+                            <p>AI Rain Prediction</p>
+                            <strong id="predictedRainfall">
+                                -- mm
+                            </strong>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= HOURLY WEATHER ================= -->
+
+        <section class="forecast-section">
+
+            <div class="section-heading">
+
+                <div>
+                    <p class="small-label">
+                        HOURLY FORECAST
+                    </p>
+
+                    <h2>Today's Weather</h2>
+                </div>
+
+                <button class="view-btn">
+                    View Details →
+                </button>
+
+            </div>
+
+
+            <div class="hourly-container">
+
+
+                <div class="hour-card active">
+
+                    <p>Now</p>
+
+                    <span>🌤️</span>
+
+                    <strong id="hourTemp1">
+                        --°
+                    </strong>
+
+                    <small id="hourRain1">
+                        --% rain
+                    </small>
+
+                </div>
+
+
+                <div class="hour-card">
+
+                    <p>11 AM</p>
+
+                    <span>☀️</span>
+
+                    <strong id="hourTemp2">
+                        --°
+                    </strong>
+
+                    <small id="hourRain2">
+                        --% rain
+                    </small>
+
+                </div>
+
+
+                <div class="hour-card">
+
+                    <p>12 PM</p>
+
+                    <span>🌤️</span>
+
+                    <strong id="hourTemp3">
+                        --°
+                    </strong>
+
+                    <small id="hourRain3">
+                        --% rain
+                    </small>
+
+                </div>
+
+
+                <div class="hour-card">
+
+                    <p>1 PM</p>
+
+                    <span>☀️</span>
+
+                    <strong id="hourTemp4">
+                        --°
+                    </strong>
+
+                    <small id="hourRain4">
+                        --% rain
+                    </small>
+
+                </div>
+
+
+                <div class="hour-card">
+
+                    <p>2 PM</p>
+
+                    <span>🌦️</span>
+
+                    <strong id="hourTemp5">
+                        --°
+                    </strong>
+
+                    <small id="hourRain5">
+                        --% rain
+                    </small>
+
+                </div>
+
+
+                <div class="hour-card">
+
+                    <p>3 PM</p>
+
+                    <span>🌧️</span>
+
+                    <strong id="hourTemp6">
+                        --°
+                    </strong>
+
+                    <small id="hourRain6">
+                        --% rain
+                    </small>
+
+                </div>
+
+
+                <div class="hour-card">
+
+                    <p>4 PM</p>
+
+                    <span>🌦️</span>
+
+                    <strong id="hourTemp7">
+                        --°
+                    </strong>
+
+                    <small id="hourRain7">
+                        --% rain
+                    </small>
+
+                </div>
+
+
+                <div class="hour-card">
+
+                    <p>5 PM</p>
+
+                    <span>🌤️</span>
+
+                    <strong id="hourTemp8">
+                        --°
+                    </strong>
+
+                    <small id="hourRain8">
+                        --% rain
+                    </small>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= 15 DAY FORECAST ================= -->
+
+        <section class="forecast-section">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <p class="small-label">
+                        EXTENDED FORECAST
+                    </p>
+
+                    <h2>15-Day Weather Forecast</h2>
+
+                </div>
+
+                <span class="forecast-note">
+                    📅 Long-term outlook
+                </span>
+
+            </div>
+
+
+            <div class="daily-forecast-container">
+
+
+                <div class="day-card today">
+
+                    <p>Today</p>
+
+                    <span>🌤️</span>
+
+                    <strong id="dayTemp1">
+                        --°C
+                    </strong>
+
+                    <small>
+                        --° / --°
+                    </small>
+
+                </div>
+
+
+                <div class="day-card">
+
+                    <p>Tomorrow</p>
+
+                    <span>☀️</span>
+
+                    <strong id="dayTemp2">
+                        --°C
+                    </strong>
+
+                    <small>
+                        --° / --°
+                    </small>
+
+                </div>
+
+
+                <div class="day-card">
+
+                    <p>Day 3</p>
+
+                    <span>🌦️</span>
+
+                    <strong id="dayTemp3">
+                        --°C
+                    </strong>
+
+                    <small>
+                        --° / --°
+                    </small>
+
+                </div>
+
+
+                <div class="day-card">
+
+                    <p>Day 4</p>
+
+                    <span>🌧️</span>
+
+                    <strong id="dayTemp4">
+                        --°C
+                    </strong>
+
+                    <small>
+                        --° / --°
+                    </small>
+
+                </div>
+
+
+                <div class="day-card">
+
+                    <p>Day 5</p>
+
+                    <span>⛅</span>
+
+                    <strong id="dayTemp5">
+                        --°C
+                    </strong>
+
+                    <small>
+                        --° / --°
+                    </small>
+
+                </div>
+
+
+                <div class="day-card">
+
+                    <p>Day 6</p>
+
+                    <span>☀️</span>
+
+                    <strong id="dayTemp6">
+                        --°C
+                    </strong>
+
+                    <small>
+                        --° / --°
+                    </small>
+
+                </div>
+
+
+                <div class="day-card">
+
+                    <p>Day 7</p>
+
+                    <span>🌦️</span>
+
+                    <strong id="dayTemp7">
+                        --°C
+                    </strong>
+
+                    <small>
+                        --° / --°
+                    </small>
+
+                </div>
+
+
+                <div class="day-card">
+
+                    <p>Day 8</p>
+
+                    <span>🌤️</span>
+
+                    <strong id="dayTemp8">
+                        --°C
+                    </strong>
+
+                    <small>
+                        --° / --°
+                    </small>
+
+                </div>
+
+
+                <div class="day-card">
+
+                    <p>Day 9</p>
+
+                    <span>☀️</span>
+
+                    <strong id="dayTemp9">
+                        --°C
+                    </strong>
+
+                    <small>
+                        --° / --°
+                    </small>
+
+                </div>
+
+
+                <div class="day-card">
+
+                    <p>Day 10</p>
+
+                    <span>🌧️</span>
+
+                    <strong id="dayTemp10">
+                        --°C
+                    </strong>
+
+                    <small>
+                        --° / --°
+                    </small>
+
+                </div>
+
+
+                <div class="day-card">
+
+                    <p>Day 11</p>
+
+                    <span>⛅</span>
+
+                    <strong id="dayTemp11">
+                        --°C
+                    </strong>
+
+                    <small>
+                        --° / --°
+                    </small>
+
+                </div>
+
+
+                <div class="day-card">
+
+                    <p>Day 12</p>
+
+                    <span>☀️</span>
+
+                    <strong id="dayTemp12">
+                        --°C
+                    </strong>
+
+                    <small>
+                        --° / --°
+                    </small>
+
+                </div>
+
+
+                <div class="day-card">
+
+                    <p>Day 13</p>
+
+                    <span>🌦️</span>
+
+                    <strong id="dayTemp13">
+                        --°C
+                    </strong>
+
+                    <small>
+                        --° / --°
+                    </small>
+
+                </div>
+
+
+                <div class="day-card">
+
+                    <p>Day 14</p>
+
+                    <span>🌤️</span>
+
+                    <strong id="dayTemp14">
+                        --°C
+                    </strong>
+
+                    <small>
+                        --° / --°
+                    </small>
+
+                </div>
+
+
+                <div class="day-card">
+
+                    <p>Day 15</p>
+
+                    <span>☀️</span>
+
+                    <strong id="dayTemp15">
+                        --°C
+                    </strong>
+
+                    <small>
+                        --° / --°
+                    </small>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= WEATHER DETAILS ================= -->
+
+        <section class="details-section">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <p class="small-label">
+                        WEATHER INFORMATION
+                    </p>
+
+                    <h2>Weather Details</h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="details-grid">
+
+
+                <div class="detail-card">
+
+                    <div class="detail-icon">
+                        💧
+                    </div>
+
+                    <div>
+                        <p>Humidity</p>
+                        <strong id="detailHumidity">
+                            -- %
+                        </strong>
+                    </div>
+
+                </div>
+
+
+                <div class="detail-card">
+
+                    <div class="detail-icon">
+                        💨
+                    </div>
+
+                    <div>
+                        <p>Wind Speed</p>
+                        <strong id="detailWind">
+                            -- km/h
+                        </strong>
+                    </div>
+
+                </div>
+
+
+                <div class="detail-card">
+
+                    <div class="detail-icon">
+                        ☀️
+                    </div>
+
+                    <div>
+                        <p>UV Index</p>
+                        <strong id="uvIndex">
+                            --
+                        </strong>
+                    </div>
+
+                </div>
+
+
+                <div class="detail-card">
+
+                    <div class="detail-icon">
+                        👁️
+                    </div>
+
+                    <div>
+                        <p>Visibility</p>
+                        <strong id="visibility">
+                            -- km
+                        </strong>
+                    </div>
+
+                </div>
+
+
+                <div class="detail-card">
+
+                    <div class="detail-icon">
+                        📊
+                    </div>
+
+                    <div>
+                        <p>Air Pressure</p>
+                        <strong id="pressure">
+                            -- hPa
+                        </strong>
+                    </div>
+
+                </div>
+
+
+                <div class="detail-card">
+
+                    <div class="detail-icon">
+                        🌧️
+                    </div>
+
+                    <div>
+                        <p>Predicted Rainfall</p>
+                        <strong id="detailRainfall">
+                            -- mm
+                        </strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= SMART ALERT ================= -->
+
+        <section class="smart-alert-section">
+
+            <div class="alert-card" id="weatherAlert">
+
+                <div class="alert-icon">
+                    ⚠️
+                </div>
+
+                <div class="alert-content">
+
+                    <p class="small-label">
+                        SMART WEATHER ALERT
+                    </p>
+
+                    <h3 id="alertTitle">
+                        No weather alert
+                    </h3>
+
+                    <p id="alertMessage">
+                        Search a location to receive weather-based alerts
+                        and safety recommendations.
+                    </p>
+
+                </div>
+
+                <div class="alert-level" id="alertLevel">
+                    NORMAL
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= UNIQUE AI FEATURES ================= -->
+
+        <section class="smart-features">
+
+
+            <!-- AI INSIGHT -->
+
+            <div class="smart-card ai-card">
+
+                <div class="smart-card-header">
+
+                    <div class="smart-icon">
+                        🤖
+                    </div>
+
+                    <div>
+
+                        <p class="small-label">
+                            AI FEATURE
+                        </p>
+
+                        <h3>
+                            AI Weather Insight
+                        </h3>
+
+                    </div>
+
+                </div>
+
+                <p id="aiInsight">
+
+                    Our intelligent weather system will provide a
+                    simple explanation of the forecast and help you
+                    understand what today's weather means for you.
+
+                </p>
+
+            </div>
+
+
+
+            <!-- VILLAGE ADVISORY -->
+
+            <div class="smart-card agriculture-card">
+
+                <div class="smart-card-header">
+
+                    <div class="smart-icon">

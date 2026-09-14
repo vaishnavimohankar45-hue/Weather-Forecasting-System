@@ -2,245 +2,821 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Weather Forecasting System</title>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="WeatherWise - Smart weather forecasting with AI insights, rainfall prediction and agriculture advisory."
+    >
+
+    <title>WeatherWise | Smart Weather Forecast</title>
 
     <link rel="stylesheet" href="style.css">
+
 </head>
+
 
 <body>
 
-    <!-- ================= HEADER ================= -->
+
+    <!-- =========================================================
+         BACKGROUND
+    ========================================================== -->
+
+    <div
+        class="weather-background"
+        aria-hidden="true"
+    >
+
+        <div class="weather-overlay"></div>
+
+        <div class="weather-cloud cloud-one"></div>
+
+        <div class="weather-cloud cloud-two"></div>
+
+    </div>
+
+
+
+    <!-- =========================================================
+         HEADER
+    ========================================================== -->
 
     <header class="top-header">
 
-        <div class="brand">
-            <div class="brand-icon">☁️</div>
+        <div class="header-inner">
 
-            <div>
-                <h1>Weather<span>Wise</span></h1>
-                <p>Smart Weather Forecasting System</p>
-            </div>
+
+            <!-- LOGO -->
+
+            <a
+                href="#"
+                class="brand"
+                onclick="showHomeView(); return false;"
+            >
+
+                <div class="brand-logo">
+
+                    <!-- Cloud SVG -->
+
+                    <svg
+                        viewBox="0 0 64 64"
+                        width="34"
+                        height="34"
+                        fill="none"
+                    >
+
+                        <path
+                            d="M18 48h29c7 0 12-5 12-11s-5-11-11-11c-1-8-7-13-15-13-8 0-15 6-16 14-7 0-12 5-12 11s6 10 13 10Z"
+                            fill="currentColor"
+                        />
+
+                        <path
+                            d="M25 35h16"
+                            stroke="white"
+                            stroke-width="3"
+                            stroke-linecap="round"
+                        />
+
+                    </svg>
+
+                </div>
+
+
+                <div class="brand-text">
+
+                    <h1>
+                        Weather<span>Wise</span>
+                    </h1>
+
+                    <p>
+                        Smart Weather Forecasting
+                    </p>
+
+                </div>
+
+            </a>
+
+
+
+            <!-- NAVIGATION -->
+
+            <nav class="navigation">
+
+
+                <button
+                    class="nav-btn active"
+                    type="button"
+                    onclick="showHomeView()"
+                >
+
+                    <!-- Home Icon -->
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        width="18"
+                        height="18"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+
+                        <path d="M3 11.5 12 4l9 7.5"></path>
+
+                        <path d="M5.5 10v10h13V10"></path>
+
+                        <path d="M9.5 20v-6h5v6"></path>
+
+                    </svg>
+
+                    <span>Home</span>
+
+                </button>
+
+
+
+                <button
+                    class="nav-btn"
+                    type="button"
+                    onclick="showForecastView()"
+                >
+
+                    <!-- Calendar Icon -->
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        width="18"
+                        height="18"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+
+                        <rect
+                            x="3"
+                            y="5"
+                            width="18"
+                            height="16"
+                            rx="3"
+                        ></rect>
+
+                        <path d="M8 3v4"></path>
+
+                        <path d="M16 3v4"></path>
+
+                        <path d="M3 10h18"></path>
+
+                        <path d="M8 14h.01"></path>
+
+                        <path d="M12 14h.01"></path>
+
+                        <path d="M16 14h.01"></path>
+
+                        <path d="M8 18h.01"></path>
+
+                        <path d="M12 18h.01"></path>
+
+                    </svg>
+
+                    <span>15-Day Forecast</span>
+
+                </button>
+
+
+
+                <button
+                    class="nav-btn"
+                    type="button"
+                    onclick="scrollToSection('smartSection')"
+                >
+
+                    <!-- Sparkle AI Icon -->
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        width="18"
+                        height="18"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+
+                        <path d="m12 3-1.5 5.5L5 10l5.5 1.5L12 17l1.5-5.5L19 10l-5.5-1.5L12 3Z"></path>
+
+                        <path d="m19 16-.7 2.3L16 19l2.3.7L19 22l.7-2.3L22 19l-2.3-.7L19 16Z"></path>
+
+                    </svg>
+
+                    <span>Smart Insights</span>
+
+                </button>
+
+
+
+                <!-- LANGUAGE -->
+
+                <button
+                    class="language-btn"
+                    type="button"
+                    title="Change language"
+                    onclick="toggleLanguageMenu()"
+                >
+
+                    <!-- Globe -->
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        width="19"
+                        height="19"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                    >
+
+                        <circle
+                            cx="12"
+                            cy="12"
+                            r="9"
+                        ></circle>
+
+                        <path
+                            d="M3 12h18"
+                        ></path>
+
+                        <path
+                            d="M12 3c3 3 4 6 4 9s-1 6-4 9"
+                        ></path>
+
+                        <path
+                            d="M12 3c-3 3-4 6-4 9s1 6 4 9"
+                        ></path>
+
+                    </svg>
+
+                    <span id="currentLanguage">
+                        EN
+                    </span>
+
+                </button>
+
+
+            </nav>
+
         </div>
-
-        <nav class="navigation">
-
-            <button class="nav-btn">
-                🏠 Home
-            </button>
-
-            <button class="nav-btn">
-                ⚙️ Settings
-            </button>
-
-            <button class="nav-btn">
-                ℹ️ About
-            </button>
-
-        </nav>
 
     </header>
 
 
-    <!-- ================= MAIN CONTAINER ================= -->
 
-    <main class="dashboard">
+    <!-- =========================================================
+         HOME VIEW
+    ========================================================== -->
 
-
-        <!-- ================= SEARCH ================= -->
-
-        <div class="search-section">
-
-    <div class="search-box">
-
-        <input
-            type="text"
-            id="locationInput"
-            placeholder="Enter city or village..."
-            autocomplete="off"
-        >
-
-        <!-- Add Location -->
-        <button
-            class="add-btn"
-            onclick="addLocation()"
-            title="Add location"
-        >
-            ＋
-        </button>
-
-        <!-- Search -->
-        <button
-            class="search-btn"
-            onclick="searchWeather()"
-            title="Search weather"
-        >
-            🔍 Search
-        </button>
-
-    </div>
-
-   
-
-        <!-- ================= LOCATION HEADER ================= -->
-
-         <!-- Current Location -->
-    <button
-        class="location-btn"
-        onclick="getCurrentLocation()"
-        title="Use your current location"
+    <main
+        class="dashboard"
+        id="homeView"
     >
-        📍 Use My Location
-    </button>
-
-</div>
-
-<div id="errorMessage"></div>
 
 
-        <!-- ================= MAIN WEATHER ================= -->
 
-        <section class="main-weather-grid">
+        <!-- =====================================================
+             HERO
+        ====================================================== -->
+
+        <section class="hero-section">
 
 
-            <!-- CURRENT WEATHER -->
+            <div class="hero-content">
 
-            <div class="current-weather-card">
 
-                <div class="weather-condition">
+                <div class="hero-badge">
 
-                    <div class="weather-icon-large" id="weatherIcon">
-                        🌤️
-                    </div>
+                    <span class="live-dot"></span>
 
-                    <div>
-
-                        <p class="condition-label">
-                            CURRENT WEATHER
-                        </p>
-
-                        <h3 id="weatherCondition">
-                            Waiting for data
-                        </h3>
-
-                    </div>
+                    Live Weather Forecast
 
                 </div>
 
 
-                <div class="temperature-area">
+                <h2>
 
-                    <span id="temperature">
-                        --
+                    Weather that helps you
+
+                    <span>
+                        plan your day.
                     </span>
 
-                    <sup>°C</sup>
-
-                </div>
+                </h2>
 
 
-                <p class="feels-like">
-                    Feels like <strong id="feelsLike">--°C</strong>
+                <p>
+
+                    Simple, smart and easy-to-understand
+                    weather information for cities,
+                    towns and villages.
+
                 </p>
 
-
-                <div class="sun-info">
-
-                    <div>
-                        🌅
-                        <span>Sunrise</span>
-                        <strong id="sunrise">--</strong>
-                    </div>
-
-                    <div>
-                        🌇
-                        <span>Sunset</span>
-                        <strong id="sunset">--</strong>
-                    </div>
-
-                </div>
 
             </div>
 
 
 
-            <!-- WEATHER SUMMARY -->
+            <!-- SEARCH -->
 
-            <div class="weather-summary-card">
+            <div class="search-area">
 
-                <div class="card-heading">
 
-                    <div>
-                        <p class="small-label">
-                            TODAY'S SUMMARY
-                        </p>
+                <div class="search-box">
 
-                        <h3>Weather Overview</h3>
-                    </div>
 
-                    <span class="summary-icon">
-                        🌦️
-                    </span>
+                    <!-- Search Icon -->
+
+                    <svg
+                        class="search-icon"
+                        viewBox="0 0 24 24"
+                        width="21"
+                        height="21"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                    >
+
+                        <circle
+                            cx="11"
+                            cy="11"
+                            r="7"
+                        ></circle>
+
+                        <path
+                            d="m20 20-4-4"
+                        ></path>
+
+                    </svg>
+
+
+
+                    <input
+                        type="text"
+                        id="locationInput"
+                        placeholder="Search city, town or village..."
+                        autocomplete="off"
+                        aria-label="Search location"
+                    >
+
+
+
+                    <!-- Clear -->
+
+                    <button
+                        class="clear-search"
+                        type="button"
+                        onclick="clearLocationSearch()"
+                        title="Clear"
+                        aria-label="Clear search"
+                    >
+
+                        ×
+
+                    </button>
+
+
+
+                    <!-- Add -->
+
+                    <button
+                        class="add-btn"
+                        type="button"
+                        onclick="addLocation()"
+                        title="Save location"
+                        aria-label="Save location"
+                    >
+
+                        +
+
+                    </button>
+
+
+
+                    <!-- Search -->
+
+                    <button
+                        class="search-btn"
+                        type="button"
+                        onclick="searchWeather()"
+                    >
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            width="18"
+                            height="18"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        >
+
+                            <circle
+                                cx="11"
+                                cy="11"
+                                r="7"
+                            ></circle>
+
+                            <path
+                                d="m20 20-4-4"
+                            ></path>
+
+                        </svg>
+
+                        Search
+
+                    </button>
+
 
                 </div>
 
 
-                <div class="summary-grid">
+
+                <!-- CURRENT LOCATION -->
+
+                <button
+                    class="location-btn"
+                    type="button"
+                    onclick="getCurrentLocation()"
+                >
+
+                    <!-- Location SVG -->
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        width="19"
+                        height="19"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                    >
+
+                        <path
+                            d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"
+                        ></path>
+
+                        <circle
+                            cx="12"
+                            cy="10"
+                            r="2.5"
+                        ></circle>
+
+                    </svg>
+
+                    Use My Location
+
+                </button>
 
 
-                    <div class="summary-item">
+            </div>
 
-                        <span>💧</span>
+
+
+            <!-- ERROR -->
+
+            <div
+                id="errorMessage"
+                class="error-message"
+                role="alert"
+            ></div>
+
+
+        </section>
+
+
+
+
+        <!-- =====================================================
+             CURRENT WEATHER
+        ====================================================== -->
+
+        <section class="current-weather-section">
+
+
+            <div class="current-weather-card">
+
+
+                <!-- LEFT -->
+
+                <div class="current-main">
+
+
+                    <!-- LOCATION -->
+
+                    <div class="location-line">
+
+
+                        <!-- Pin -->
+
+                        <div class="location-pin">
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                width="22"
+                                height="22"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                            >
+
+                                <path
+                                    d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"
+                                ></path>
+
+                                <circle
+                                    cx="12"
+                                    cy="10"
+                                    r="2.5"
+                                ></circle>
+
+                            </svg>
+
+                        </div>
+
 
                         <div>
-                            <p>Humidity</p>
-                            <strong id="humidity">-- %</strong>
+
+                            <h3 id="locationName">
+                                Search a location
+                            </h3>
+
+                            <p>
+
+                                <span id="country"></span>
+
+                                <span class="location-separator">
+                                    •
+                                </span>
+
+                                <span id="currentDate">
+                                    --
+                                </span>
+
+                            </p>
+
                         </div>
+
 
                     </div>
 
 
-                    <div class="summary-item">
 
-                        <span>💨</span>
+                    <!-- CONDITION -->
 
-                        <div>
-                            <p>Wind Speed</p>
-                            <strong id="windSpeed">-- km/h</strong>
+                    <div class="current-condition">
+
+
+                        <div
+                            class="weather-icon-large"
+                            id="weatherIcon"
+                        >
+
+                            ☀
+
                         </div>
+
+
+                        <div class="condition-info">
+
+                            <p class="condition-label">
+                                CURRENT WEATHER
+                            </p>
+
+                            <h4 id="weatherCondition">
+                                Waiting for data
+                            </h4>
+
+                        </div>
+
 
                     </div>
 
 
-                    <div class="summary-item">
 
-                        <span>🌧️</span>
+                    <!-- TEMPERATURE -->
 
-                        <div>
-                            <p>Rainfall</p>
-                            <strong id="currentRainfall">-- mm</strong>
-                        </div>
+                    <div class="temperature-area">
+
+                        <span id="temperature">
+                            --°C
+                        </span>
 
                     </div>
 
 
-                    <div class="summary-item">
 
-                        <span>🤖</span>
+                    <!-- FEELS LIKE -->
+
+                    <p class="feels-like">
+
+                        <span>
+                            Feels like
+                        </span>
+
+                        <strong id="feelsLike">
+                            --
+                        </strong>
+
+                    </p>
+
+
+                </div>
+
+
+
+                <!-- RIGHT : SUN -->
+
+                <div class="sun-panel">
+
+
+                    <div class="sun-title">
+
+
+                        <!-- Sun Icon -->
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            width="21"
+                            height="21"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        >
+
+                            <circle
+                                cx="12"
+                                cy="12"
+                                r="4"
+                            ></circle>
+
+                            <path d="M12 2v2"></path>
+
+                            <path d="M12 20v2"></path>
+
+                            <path d="m4.93 4.93 1.42 1.42"></path>
+
+                            <path d="m17.65 17.65 1.42 1.42"></path>
+
+                            <path d="M2 12h2"></path>
+
+                            <path d="M20 12h2"></path>
+
+                            <path d="m4.93 19.07 1.42-1.42"></path>
+
+                            <path d="m17.65 6.35 1.42-1.42"></path>
+
+                        </svg>
+
+
+                        <span>
+                            Daylight
+                        </span>
+
+                    </div>
+
+
+
+                    <!-- SUNRISE -->
+
+                    <div class="sun-item">
+
+
+                        <div class="sun-icon sunrise-icon">
+
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                width="28"
+                                height="28"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                            >
+
+                                <path
+                                    d="M3 18h18"
+                                ></path>
+
+                                <path
+                                    d="M6 15a6 6 0 0 1 12 0"
+                                ></path>
+
+                                <path
+                                    d="M12 3v4"
+                                ></path>
+
+                                <path
+                                    d="m5 8 2 2"
+                                ></path>
+
+                                <path
+                                    d="m19 8-2 2"
+                                ></path>
+
+                            </svg>
+
+
+                        </div>
+
 
                         <div>
-                            <p>AI Rain Prediction</p>
-                            <strong id="predictedRainfall">
-                                -- mm
+
+                            <span>
+                                Sunrise
+                            </span>
+
+                            <strong id="sunrise">
+                                --
                             </strong>
+
                         </div>
+
+
+                    </div>
+
+
+
+                    <div class="sun-divider"></div>
+
+
+
+                    <!-- SUNSET -->
+
+                    <div class="sun-item">
+
+
+                        <div class="sun-icon sunset-icon">
+
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                width="28"
+                                height="28"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                            >
+
+                                <path
+                                    d="M3 18h18"
+                                ></path>
+
+                                <path
+                                    d="M6 15a6 6 0 0 1 12 0"
+                                ></path>
+
+                                <path
+                                    d="M12 3v4"
+                                ></path>
+
+                                <path
+                                    d="m5 8 2 2"
+                                ></path>
+
+                                <path
+                                    d="m19 8-2 2"
+                                ></path>
+
+                            </svg>
+
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Sunset
+                            </span>
+
+                            <strong id="sunset">
+                                --
+                            </strong>
+
+                        </div>
+
 
                     </div>
 
 
                 </div>
+
 
             </div>
 
@@ -248,38 +824,325 @@
 
 
 
-        <!-- ================= HOURLY WEATHER ================= -->
 
-        <section class="forecast-section">
+        <!-- =====================================================
+             OVERVIEW
+        ====================================================== -->
+
+        <section class="overview-section">
+
 
             <div class="section-heading">
 
-                <div>
-                    <p class="small-label">
-                        HOURLY FORECAST
-                    </p>
 
-                    <h2>Today's Weather</h2>
+                <div>
+
+                    <span class="section-kicker">
+                        TODAY AT A GLANCE
+                    </span>
+
+                    <h2>
+                        Weather Overview
+                    </h2>
+
                 </div>
 
-                <button class="view-btn">
-                    View Details →
-                </button>
+
+                <span class="section-description">
+                    Important information at a glance
+                </span>
+
 
             </div>
 
 
-            <div class="hourly-container">
 
+            <div class="summary-grid">
+
+
+                <!-- HUMIDITY -->
+
+                <div class="summary-item">
+
+
+                    <div class="summary-icon humidity-icon">
+
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            width="25"
+                            height="25"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        >
+
+                            <path
+                                d="M12 3s6 6.2 6 11a6 6 0 0 1-12 0c0-4.8 6-11 6-11Z"
+                            ></path>
+
+                            <path
+                                d="M9 15c.5 1.2 1.5 2 3 2"
+                            ></path>
+
+                        </svg>
+
+
+                    </div>
+
+
+                    <div>
+
+                        <p>
+                            Humidity
+                        </p>
+
+                        <strong id="humidity">
+                            --%
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- WIND -->
+
+                <div class="summary-item">
+
+
+                    <div class="summary-icon wind-icon">
+
+
+                        <svg
+                            viewBox="0 0 32 32"
+                            width="27"
+                            height="27"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                        >
+
+                            <path d="M4 10h17"></path>
+
+                            <path d="M4 16h23"></path>
+
+                            <path d="M4 22h13"></path>
+
+                            <path d="M21 10c3 0 3-4 0-4"></path>
+
+                            <path d="M27 16c3 0 3-4 0-4"></path>
+
+                            <path d="M17 22c3 0 3-4 0-4"></path>
+
+                        </svg>
+
+
+                    </div>
+
+
+                    <div>
+
+                        <p>
+                            Wind Speed
+                        </p>
+
+                        <strong id="windSpeed">
+                            -- km/h
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- RAIN -->
+
+                <div class="summary-item">
+
+
+                    <div class="summary-icon rain-icon">
+
+
+                        <svg
+                            viewBox="0 0 32 32"
+                            width="27"
+                            height="27"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+
+                            <path
+                                d="M8 19h16a5 5 0 0 0 0-10 7 7 0 0 0-13-2A5 5 0 0 0 8 19Z"
+                            ></path>
+
+                            <path d="M10 23l-1 3"></path>
+
+                            <path d="M16 23l-1 3"></path>
+
+                            <path d="M22 23l-1 3"></path>
+
+                        </svg>
+
+
+                    </div>
+
+
+                    <div>
+
+                        <p>
+                            Current Rainfall
+                        </p>
+
+                        <strong id="currentRainfall">
+                            -- mm
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- AI PREDICTION -->
+
+                <div class="summary-item prediction-item">
+
+
+                    <div class="summary-icon ai-icon">
+
+
+                        <!-- AI Spark / Neural Icon -->
+
+                        <svg
+                            viewBox="0 0 32 32"
+                            width="28"
+                            height="28"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+
+                            <circle
+                                cx="16"
+                                cy="16"
+                                r="7"
+                            ></circle>
+
+                            <circle
+                                cx="16"
+                                cy="16"
+                                r="2"
+                            ></circle>
+
+                            <path d="M16 2v5"></path>
+
+                            <path d="M16 25v5"></path>
+
+                            <path d="M2 16h5"></path>
+
+                            <path d="M25 16h5"></path>
+
+                            <path d="m6 6 4 4"></path>
+
+                            <path d="m22 22 4 4"></path>
+
+                            <path d="m26 6-4 4"></path>
+
+                            <path d="m10 22-4 4"></path>
+
+                        </svg>
+
+
+                    </div>
+
+
+                    <div>
+
+                        <p>
+                            ML Rain Prediction
+                        </p>
+
+                        <strong id="predictedRainfall">
+                            -- mm
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+
+        <!-- =====================================================
+             HOURLY FORECAST
+        ====================================================== -->
+
+        <section class="forecast-section">
+
+
+            <div class="section-heading forecast-heading">
+
+
+                <div>
+
+                    <span class="section-kicker">
+                        NEXT FEW HOURS
+                    </span>
+
+                    <h2>
+                        Hourly Forecast
+                    </h2>
+
+                </div>
+
+
+                <span class="scroll-hint">
+                    ← Swipe to explore →
+                </span>
+
+
+            </div>
+
+
+
+            <div class="hourly-scroll">
+
+
+                <!-- HOUR 1 -->
 
                 <div class="hour-card active">
 
-                    <p>Now</p>
+                    <p id="hourTime1">
+                        Now
+                    </p>
 
-                    <span>🌤️</span>
+                    <span
+                        class="hour-icon"
+                        id="hourIcon1"
+                    >
+                        ☀
+                    </span>
 
                     <strong id="hourTemp1">
-                        --°
+                        --°C
                     </strong>
 
                     <small id="hourRain1">
@@ -289,14 +1152,24 @@
                 </div>
 
 
+
+                <!-- HOUR 2 -->
+
                 <div class="hour-card">
 
-                    <p>11 AM</p>
+                    <p id="hourTime2">
+                        --
+                    </p>
 
-                    <span>☀️</span>
+                    <span
+                        class="hour-icon"
+                        id="hourIcon2"
+                    >
+                        ☀
+                    </span>
 
                     <strong id="hourTemp2">
-                        --°
+                        --°C
                     </strong>
 
                     <small id="hourRain2">
@@ -306,14 +1179,24 @@
                 </div>
 
 
+
+                <!-- HOUR 3 -->
+
                 <div class="hour-card">
 
-                    <p>12 PM</p>
+                    <p id="hourTime3">
+                        --
+                    </p>
 
-                    <span>🌤️</span>
+                    <span
+                        class="hour-icon"
+                        id="hourIcon3"
+                    >
+                        ☀
+                    </span>
 
                     <strong id="hourTemp3">
-                        --°
+                        --°C
                     </strong>
 
                     <small id="hourRain3">
@@ -323,14 +1206,24 @@
                 </div>
 
 
+
+                <!-- HOUR 4 -->
+
                 <div class="hour-card">
 
-                    <p>1 PM</p>
+                    <p id="hourTime4">
+                        --
+                    </p>
 
-                    <span>☀️</span>
+                    <span
+                        class="hour-icon"
+                        id="hourIcon4"
+                    >
+                        ☀
+                    </span>
 
                     <strong id="hourTemp4">
-                        --°
+                        --°C
                     </strong>
 
                     <small id="hourRain4">
@@ -340,14 +1233,24 @@
                 </div>
 
 
+
+                <!-- HOUR 5 -->
+
                 <div class="hour-card">
 
-                    <p>2 PM</p>
+                    <p id="hourTime5">
+                        --
+                    </p>
 
-                    <span>🌦️</span>
+                    <span
+                        class="hour-icon"
+                        id="hourIcon5"
+                    >
+                        ☀
+                    </span>
 
                     <strong id="hourTemp5">
-                        --°
+                        --°C
                     </strong>
 
                     <small id="hourRain5">
@@ -357,14 +1260,24 @@
                 </div>
 
 
+
+                <!-- HOUR 6 -->
+
                 <div class="hour-card">
 
-                    <p>3 PM</p>
+                    <p id="hourTime6">
+                        --
+                    </p>
 
-                    <span>🌧️</span>
+                    <span
+                        class="hour-icon"
+                        id="hourIcon6"
+                    >
+                        ☀
+                    </span>
 
                     <strong id="hourTemp6">
-                        --°
+                        --°C
                     </strong>
 
                     <small id="hourRain6">
@@ -374,14 +1287,24 @@
                 </div>
 
 
+
+                <!-- HOUR 7 -->
+
                 <div class="hour-card">
 
-                    <p>4 PM</p>
+                    <p id="hourTime7">
+                        --
+                    </p>
 
-                    <span>🌦️</span>
+                    <span
+                        class="hour-icon"
+                        id="hourIcon7"
+                    >
+                        ☀
+                    </span>
 
                     <strong id="hourTemp7">
-                        --°
+                        --°C
                     </strong>
 
                     <small id="hourRain7">
@@ -391,14 +1314,24 @@
                 </div>
 
 
+
+                <!-- HOUR 8 -->
+
                 <div class="hour-card">
 
-                    <p>5 PM</p>
+                    <p id="hourTime8">
+                        --
+                    </p>
 
-                    <span>🌤️</span>
+                    <span
+                        class="hour-icon"
+                        id="hourIcon8"
+                    >
+                        ☀
+                    </span>
 
                     <strong id="hourTemp8">
-                        --°
+                        --°C
                     </strong>
 
                     <small id="hourRain8">
@@ -407,291 +1340,209 @@
 
                 </div>
 
+
             </div>
 
         </section>
 
 
 
-        <!-- ================= 15 DAY FORECAST ================= -->
 
-        <section class="forecast-section">
+        <!-- =====================================================
+             5 DAY PREVIEW
+        ====================================================== -->
+
+        <section class="forecast-preview-section">
+
 
             <div class="section-heading">
 
+
                 <div>
 
-                    <p class="small-label">
-                        EXTENDED FORECAST
-                    </p>
+                    <span class="section-kicker">
+                        PLAN AHEAD
+                    </span>
 
-                    <h2>15-Day Weather Forecast</h2>
+                    <h2>
+                        5-Day Preview
+                    </h2>
 
                 </div>
 
-                <span class="forecast-note">
-                    📅 Long-term outlook
-                </span>
+
+                <button
+                    class="view-all-btn"
+                    type="button"
+                    onclick="showForecastView()"
+                >
+
+                    <span>
+                        View 15-Day Forecast
+                    </span>
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        width="18"
+                        height="18"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                    >
+
+                        <path
+                            d="M5 12h14"
+                        ></path>
+
+                        <path
+                            d="m13 6 6 6-6 6"
+                        ></path>
+
+                    </svg>
+
+                </button>
+
 
             </div>
 
 
-            <div class="daily-forecast-container">
 
+            <div class="daily-preview-grid">
+
+
+                <!-- DAY 1 -->
 
                 <div class="day-card today">
 
-                    <p>Today</p>
+                    <p id="dayDate1">
+                        Today
+                    </p>
 
-                    <span>🌤️</span>
+                    <span
+                        class="day-icon"
+                        id="dayIcon1"
+                    >
+                        ☀
+                    </span>
 
                     <strong id="dayTemp1">
                         --°C
                     </strong>
 
-                    <small>
-                        --° / --°
+                    <small id="dayRain1">
+                        --% rain
                     </small>
 
                 </div>
 
 
+
+                <!-- DAY 2 -->
+
                 <div class="day-card">
 
-                    <p>Tomorrow</p>
+                    <p id="dayDate2">
+                        Tomorrow
+                    </p>
 
-                    <span>☀️</span>
+                    <span
+                        class="day-icon"
+                        id="dayIcon2"
+                    >
+                        ☀
+                    </span>
 
                     <strong id="dayTemp2">
                         --°C
                     </strong>
 
-                    <small>
-                        --° / --°
+                    <small id="dayRain2">
+                        --% rain
                     </small>
 
                 </div>
 
 
+
+                <!-- DAY 3 -->
+
                 <div class="day-card">
 
-                    <p>Day 3</p>
+                    <p id="dayDate3">
+                        Day 3
+                    </p>
 
-                    <span>🌦️</span>
+                    <span
+                        class="day-icon"
+                        id="dayIcon3"
+                    >
+                        ☀
+                    </span>
 
                     <strong id="dayTemp3">
                         --°C
                     </strong>
 
-                    <small>
-                        --° / --°
+                    <small id="dayRain3">
+                        --% rain
                     </small>
 
                 </div>
 
 
+
+                <!-- DAY 4 -->
+
                 <div class="day-card">
 
-                    <p>Day 4</p>
+                    <p id="dayDate4">
+                        Day 4
+                    </p>
 
-                    <span>🌧️</span>
+                    <span
+                        class="day-icon"
+                        id="dayIcon4"
+                    >
+                        ☀
+                    </span>
 
                     <strong id="dayTemp4">
                         --°C
                     </strong>
 
-                    <small>
-                        --° / --°
+                    <small id="dayRain4">
+                        --% rain
                     </small>
 
                 </div>
 
 
+
+                <!-- DAY 5 -->
+
                 <div class="day-card">
 
-                    <p>Day 5</p>
+                    <p id="dayDate5">
+                        Day 5
+                    </p>
 
-                    <span>⛅</span>
+                    <span
+                        class="day-icon"
+                        id="dayIcon5"
+                    >
+                        ☀
+                    </span>
 
                     <strong id="dayTemp5">
                         --°C
                     </strong>
 
-                    <small>
-                        --° / --°
+                    <small id="dayRain5">
+                        --% rain
                     </small>
 
                 </div>
 
-
-                <div class="day-card">
-
-                    <p>Day 6</p>
-
-                    <span>☀️</span>
-
-                    <strong id="dayTemp6">
-                        --°C
-                    </strong>
-
-                    <small>
-                        --° / --°
-                    </small>
-
-                </div>
-
-
-                <div class="day-card">
-
-                    <p>Day 7</p>
-
-                    <span>🌦️</span>
-
-                    <strong id="dayTemp7">
-                        --°C
-                    </strong>
-
-                    <small>
-                        --° / --°
-                    </small>
-
-                </div>
-
-
-                <div class="day-card">
-
-                    <p>Day 8</p>
-
-                    <span>🌤️</span>
-
-                    <strong id="dayTemp8">
-                        --°C
-                    </strong>
-
-                    <small>
-                        --° / --°
-                    </small>
-
-                </div>
-
-
-                <div class="day-card">
-
-                    <p>Day 9</p>
-
-                    <span>☀️</span>
-
-                    <strong id="dayTemp9">
-                        --°C
-                    </strong>
-
-                    <small>
-                        --° / --°
-                    </small>
-
-                </div>
-
-
-                <div class="day-card">
-
-                    <p>Day 10</p>
-
-                    <span>🌧️</span>
-
-                    <strong id="dayTemp10">
-                        --°C
-                    </strong>
-
-                    <small>
-                        --° / --°
-                    </small>
-
-                </div>
-
-
-                <div class="day-card">
-
-                    <p>Day 11</p>
-
-                    <span>⛅</span>
-
-                    <strong id="dayTemp11">
-                        --°C
-                    </strong>
-
-                    <small>
-                        --° / --°
-                    </small>
-
-                </div>
-
-
-                <div class="day-card">
-
-                    <p>Day 12</p>
-
-                    <span>☀️</span>
-
-                    <strong id="dayTemp12">
-                        --°C
-                    </strong>
-
-                    <small>
-                        --° / --°
-                    </small>
-
-                </div>
-
-
-                <div class="day-card">
-
-                    <p>Day 13</p>
-
-                    <span>🌦️</span>
-
-                    <strong id="dayTemp13">
-                        --°C
-                    </strong>
-
-                    <small>
-                        --° / --°
-                    </small>
-
-                </div>
-
-
-                <div class="day-card">
-
-                    <p>Day 14</p>
-
-                    <span>🌤️</span>
-
-                    <strong id="dayTemp14">
-                        --°C
-                    </strong>
-
-                    <small>
-                        --° / --°
-                    </small>
-
-                </div>
-
-
-                <div class="day-card">
-
-                    <p>Day 15</p>
-
-                    <span>☀️</span>
-
-                    <strong id="dayTemp15">
-                        --°C
-                    </strong>
-
-                    <small>
-                        --° / --°
-                    </small>
-
-                </div>
 
             </div>
 
@@ -699,122 +1550,317 @@
 
 
 
-        <!-- ================= WEATHER DETAILS ================= -->
+
+        <!-- =====================================================
+             WEATHER DETAILS
+        ====================================================== -->
 
         <section class="details-section">
 
+
             <div class="section-heading">
+
 
                 <div>
 
-                    <p class="small-label">
+                    <span class="section-kicker">
                         WEATHER INFORMATION
-                    </p>
+                    </span>
 
-                    <h2>Weather Details</h2>
+                    <h2>
+                        Weather Details
+                    </h2>
 
                 </div>
 
+
             </div>
+
 
 
             <div class="details-grid">
 
 
+                <!-- HUMIDITY -->
+
                 <div class="detail-card">
 
                     <div class="detail-icon">
-                        💧
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            width="25"
+                            height="25"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        >
+
+                            <path
+                                d="M12 3s6 6.2 6 11a6 6 0 0 1-12 0c0-4.8 6-11 6-11Z"
+                            ></path>
+
+                        </svg>
+
                     </div>
 
                     <div>
-                        <p>Humidity</p>
+
+                        <p>
+                            Humidity
+                        </p>
+
                         <strong id="detailHumidity">
-                            -- %
+                            --%
                         </strong>
+
                     </div>
 
                 </div>
 
 
+
+                <!-- WIND -->
+
                 <div class="detail-card">
 
                     <div class="detail-icon">
-                        💨
+
+                        <svg
+                            viewBox="0 0 32 32"
+                            width="27"
+                            height="27"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                        >
+
+                            <path d="M4 10h17"></path>
+
+                            <path d="M4 16h23"></path>
+
+                            <path d="M4 22h13"></path>
+
+                            <path d="M21 10c3 0 3-4 0-4"></path>
+
+                            <path d="M27 16c3 0 3-4 0-4"></path>
+
+                        </svg>
+
                     </div>
 
                     <div>
-                        <p>Wind Speed</p>
+
+                        <p>
+                            Wind Speed
+                        </p>
+
                         <strong id="detailWind">
                             -- km/h
                         </strong>
+
                     </div>
 
                 </div>
 
 
+
+                <!-- UV -->
+
                 <div class="detail-card">
 
                     <div class="detail-icon">
-                        ☀️
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            width="26"
+                            height="26"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        >
+
+                            <circle
+                                cx="12"
+                                cy="12"
+                                r="4"
+                            ></circle>
+
+                            <path d="M12 2v2"></path>
+
+                            <path d="M12 20v2"></path>
+
+                            <path d="M2 12h2"></path>
+
+                            <path d="M20 12h2"></path>
+
+                            <path d="m4.9 4.9 1.4 1.4"></path>
+
+                            <path d="m17.7 17.7 1.4 1.4"></path>
+
+                            <path d="m19.1 4.9-1.4 1.4"></path>
+
+                            <path d="m6.3 17.7-1.4 1.4"></path>
+
+                        </svg>
+
                     </div>
 
                     <div>
-                        <p>UV Index</p>
+
+                        <p>
+                            UV Index
+                        </p>
+
                         <strong id="uvIndex">
                             --
                         </strong>
+
                     </div>
 
                 </div>
 
 
+
+                <!-- VISIBILITY -->
+
                 <div class="detail-card">
 
                     <div class="detail-icon">
-                        👁️
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            width="27"
+                            height="27"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        >
+
+                            <path
+                                d="M2 12s4-6 10-6 10 6 10 6-4 6-10 6S2 12 2 12Z"
+                            ></path>
+
+                            <circle
+                                cx="12"
+                                cy="12"
+                                r="3"
+                            ></circle>
+
+                        </svg>
+
                     </div>
 
                     <div>
-                        <p>Visibility</p>
+
+                        <p>
+                            Visibility
+                        </p>
+
                         <strong id="visibility">
                             -- km
                         </strong>
+
                     </div>
 
                 </div>
 
 
+
+                <!-- PRESSURE -->
+
                 <div class="detail-card">
 
                     <div class="detail-icon">
-                        📊
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            width="27"
+                            height="27"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+
+                            <path
+                                d="M4 15a8 8 0 0 1 16 0"
+                            ></path>
+
+                            <path
+                                d="M12 15l4-5"
+                            ></path>
+
+                            <path
+                                d="M4 19h16"
+                            ></path>
+
+                        </svg>
+
                     </div>
 
                     <div>
-                        <p>Air Pressure</p>
+
+                        <p>
+                            Air Pressure
+                        </p>
+
                         <strong id="pressure">
                             -- hPa
                         </strong>
+
                     </div>
 
                 </div>
 
+
+
+                <!-- RAINFALL -->
 
                 <div class="detail-card">
 
                     <div class="detail-icon">
-                        🌧️
+
+                        <svg
+                            viewBox="0 0 32 32"
+                            width="27"
+                            height="27"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                        >
+
+                            <path
+                                d="M8 19h16a5 5 0 0 0 0-10 7 7 0 0 0-13-2A5 5 0 0 0 8 19Z"
+                            ></path>
+
+                            <path d="M10 23l-1 3"></path>
+
+                            <path d="M16 23l-1 3"></path>
+
+                            <path d="M22 23l-1 3"></path>
+
+                        </svg>
+
                     </div>
 
                     <div>
-                        <p>Predicted Rainfall</p>
+
+                        <p>
+                            Predicted Rainfall
+                        </p>
+
                         <strong id="detailRainfall">
                             -- mm
                         </strong>
+
                     </div>
 
                 </div>
+
 
             </div>
 
@@ -822,88 +1868,1750 @@
 
 
 
-        <!-- ================= SMART ALERT ================= -->
 
-        <section class="smart-alert-section">
+        <!-- =====================================================
+             SMART SECTION
+        ====================================================== -->
 
-            <div class="alert-card" id="weatherAlert">
+        <section
+            class="smart-section"
+            id="smartSection"
+        >
+
+
+            <!-- SMART ALERT -->
+
+            <div
+                class="alert-card"
+                id="weatherAlert"
+            >
+
 
                 <div class="alert-icon">
-                    ⚠️
+
+
+                    <!-- Alert Triangle -->
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        width="29"
+                        height="29"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+
+                        <path
+                            d="M10.3 3.9 2.4 18a2 2 0 0 0 1.7 3h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"
+                        ></path>
+
+                        <path d="M12 9v4"></path>
+
+                        <path d="M12 17h.01"></path>
+
+                    </svg>
+
+
                 </div>
+
 
                 <div class="alert-content">
 
-                    <p class="small-label">
+
+                    <span class="section-kicker">
                         SMART WEATHER ALERT
-                    </p>
+                    </span>
+
 
                     <h3 id="alertTitle">
                         No weather alert
                     </h3>
 
+
                     <p id="alertMessage">
-                        Search a location to receive weather-based alerts
-                        and safety recommendations.
+                        Search a location to receive
+                        weather-based alerts and
+                        recommendations.
                     </p>
+
 
                 </div>
 
-                <div class="alert-level" id="alertLevel">
+
+                <div
+                    class="alert-level"
+                    id="alertLevel"
+                >
                     NORMAL
                 </div>
 
+
             </div>
+
+
+
+            <!-- SMART GRID -->
+
+            <div class="smart-grid">
+
+
+                <!-- =================================================
+                     AI CARD
+                ================================================== -->
+
+                <article class="smart-card ai-card">
+
+
+                    <div class="smart-card-header">
+
+
+                        <!-- AI ICON -->
+
+                        <div class="smart-icon ai-smart-icon">
+
+
+                            <svg
+                                viewBox="0 0 48 48"
+                                width="32"
+                                height="32"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+
+                                <!-- Robot Head -->
+
+                                <rect
+                                    x="10"
+                                    y="14"
+                                    width="28"
+                                    height="22"
+                                    rx="7"
+                                ></rect>
+
+                                <!-- Eyes -->
+
+                                <circle
+                                    cx="19"
+                                    cy="24"
+                                    r="2"
+                                ></circle>
+
+                                <circle
+                                    cx="29"
+                                    cy="24"
+                                    r="2"
+                                ></circle>
+
+                                <!-- Mouth -->
+
+                                <path
+                                    d="M19 30h10"
+                                ></path>
+
+                                <!-- Antenna -->
+
+                                <path
+                                    d="M24 14V9"
+                                ></path>
+
+                                <circle
+                                    cx="24"
+                                    cy="7"
+                                    r="2"
+                                ></circle>
+
+                                <!-- Side lines -->
+
+                                <path
+                                    d="M10 21H6"
+                                ></path>
+
+                                <path
+                                    d="M42 21h-4"
+                                ></path>
+
+                            </svg>
+
+
+                        </div>
+
+
+                        <div>
+
+
+                            <span class="section-kicker">
+                                ARTIFICIAL INTELLIGENCE
+                            </span>
+
+
+                            <h3>
+                                Weather AI Insight
+                            </h3>
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <p id="aiInsight">
+
+                        Our intelligent weather system will
+                        provide a simple explanation of today's
+                        weather and help you understand what
+                        the forecast means for you.
+
+                    </p>
+
+
+
+                    <!-- AI QUESTIONS -->
+
+                    <div class="ai-questions">
+
+
+                        <button
+                            type="button"
+                            onclick="showAIQuestion('rain')"
+                        >
+
+                            <!-- Rain Icon -->
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                width="17"
+                                height="17"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                            >
+
+                                <path
+                                    d="M7 16h10a4 4 0 0 0 0-8 5 5 0 0 0-9-1 4 4 0 0 0-1 9Z"
+                                ></path>
+
+                                <path d="M9 19l-1 2"></path>
+
+                                <path d="M14 19l-1 2"></path>
+
+                            </svg>
+
+                            Will it rain?
+
+                        </button>
+
+
+
+                        <button
+                            type="button"
+                            onclick="showAIQuestion('travel')"
+                        >
+
+                            <!-- Car -->
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                width="17"
+                                height="17"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                            >
+
+                                <path
+                                    d="M5 16l1.5-6h11L19 16"
+                                ></path>
+
+                                <rect
+                                    x="3"
+                                    y="14"
+                                    width="18"
+                                    height="6"
+                                    rx="2"
+                                ></rect>
+
+                                <circle
+                                    cx="7"
+                                    cy="18"
+                                    r="1"
+                                ></circle>
+
+                                <circle
+                                    cx="17"
+                                    cy="18"
+                                    r="1"
+                                ></circle>
+
+                            </svg>
+
+                            Good for travel?
+
+                        </button>
+
+
+
+                        <button
+                            type="button"
+                            onclick="showAIQuestion('umbrella')"
+                        >
+
+                            <!-- Umbrella -->
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                width="17"
+                                height="17"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                            >
+
+                                <path
+                                    d="M4 13a8 8 0 0 1 16 0H4Z"
+                                ></path>
+
+                                <path
+                                    d="M12 13v7"
+                                ></path>
+
+                                <path
+                                    d="M12 20c0 2 3 2 3 0"
+                                ></path>
+
+                            </svg>
+
+                            Carry umbrella?
+
+                        </button>
+
+
+                    </div>
+
+
+                </article>
+
+
+
+
+                <!-- =================================================
+                     AGRICULTURE CARD
+                ================================================== -->
+
+                <article class="smart-card agriculture-card">
+
+
+                    <div class="smart-card-header">
+
+
+                        <!-- AGRICULTURE ICON -->
+
+                        <div class="smart-icon agriculture-smart-icon">
+
+
+                            <svg
+                                viewBox="0 0 48 48"
+                                width="34"
+                                height="34"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+
+                                <!-- Stem -->
+
+                                <path
+                                    d="M24 39V21"
+                                ></path>
+
+
+                                <!-- Main leaf -->
+
+                                <path
+                                    d="M24 27C15 27 10 21 10 12c9 0 14 6 14 15Z"
+                                ></path>
+
+
+                                <!-- Right leaf -->
+
+                                <path
+                                    d="M24 23c1-8 7-13 15-13 0 9-6 14-15 14"
+                                ></path>
+
+
+                                <!-- Ground -->
+
+                                <path
+                                    d="M8 39h32"
+                                ></path>
+
+
+                                <!-- Small leaves -->
+
+                                <path
+                                    d="M17 34c-4 0-7-2-8-6 4 0 7 2 8 6Z"
+                                ></path>
+
+                                <path
+                                    d="M31 34c4 0 7-2 8-6-4 0-7 2-8 6Z"
+                                ></path>
+
+
+                            </svg>
+
+
+                        </div>
+
+
+                        <div>
+
+
+                            <span class="section-kicker">
+                                FARM & VILLAGE
+                            </span>
+
+
+                            <h3>
+                                Agriculture Advisory
+                            </h3>
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <p id="agricultureAdvice">
+
+                        Weather-based farming advice will
+                        appear here after you search for
+                        a location.
+
+                    </p>
+
+
+
+                    <div class="advisory-note">
+
+
+                        <!-- Info Icon -->
+
+                        <div class="advisory-icon">
+
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                width="19"
+                                height="19"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                            >
+
+                                <circle
+                                    cx="12"
+                                    cy="12"
+                                    r="9"
+                                ></circle>
+
+                                <path
+                                    d="M12 11v5"
+                                ></path>
+
+                                <path
+                                    d="M12 8h.01"
+                                ></path>
+
+                            </svg>
+
+
+                        </div>
+
+
+                        <span>
+
+                            Plan irrigation, harvesting
+                            and field activities using
+                            weather conditions.
+
+                        </span>
+
+
+                    </div>
+
+
+                </article>
+
+
+            </div>
+
 
         </section>
 
 
 
-        <!-- ================= UNIQUE AI FEATURES ================= -->
 
-        <section class="smart-features">
+        <!-- =====================================================
+             FEATURES
+        ====================================================== -->
+
+        <section class="features-section">
 
 
-            <!-- AI INSIGHT -->
+            <div class="section-heading centered-heading">
 
-            <div class="smart-card ai-card">
 
-                <div class="smart-card-header">
+                <span class="section-kicker">
+                    WHY WEATHERWISE?
+                </span>
 
-                    <div class="smart-icon">
-                        🤖
-                    </div>
 
-                    <div>
+                <h2>
+                    Everything you need,
+                    without the complexity.
+                </h2>
 
-                        <p class="small-label">
-                            AI FEATURE
-                        </p>
 
-                        <h3>
-                            AI Weather Insight
-                        </h3>
-
-                    </div>
-
-                </div>
-
-                <p id="aiInsight">
-
-                    Our intelligent weather system will provide a
-                    simple explanation of the forecast and help you
-                    understand what today's weather means for you.
-
+                <p>
+                    Designed to make weather information
+                    easy for everyone.
                 </p>
+
 
             </div>
 
 
 
-            <!-- VILLAGE ADVISORY -->
+            <div class="features-grid">
 
-            <div class="smart-card agriculture-card">
 
-                <div class="smart-card-header">
+                <!-- LOCATION -->
 
-                    <div class="smart-icon">
+                <div class="feature-card">
+
+
+                    <div class="feature-icon location-feature">
+
+
+                        <svg
+                            viewBox="0 0 32 32"
+                            width="30"
+                            height="30"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        >
+
+                            <path
+                                d="M26 13c0 8-10 15-10 15S6 21 6 13a10 10 0 1 1 20 0Z"
+                            ></path>
+
+                            <circle
+                                cx="16"
+                                cy="13"
+                                r="3"
+                            ></circle>
+
+                        </svg>
+
+
+                    </div>
+
+
+                    <h3>
+                        Local Weather
+                    </h3>
+
+
+                    <p>
+                        Search cities, towns and supported
+                        village locations.
+                    </p>
+
+
+                </div>
+
+
+
+                <!-- ML -->
+
+                <div class="feature-card">
+
+
+                    <div class="feature-icon ml-feature">
+
+
+                        <svg
+                            viewBox="0 0 32 32"
+                            width="30"
+                            height="30"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        >
+
+                            <circle
+                                cx="16"
+                                cy="16"
+                                r="5"
+                            ></circle>
+
+                            <circle
+                                cx="6"
+                                cy="8"
+                                r="2"
+                            ></circle>
+
+                            <circle
+                                cx="26"
+                                cy="8"
+                                r="2"
+                            ></circle>
+
+                            <circle
+                                cx="6"
+                                cy="24"
+                                r="2"
+                            ></circle>
+
+                            <circle
+                                cx="26"
+                                cy="24"
+                                r="2"
+                            ></circle>
+
+                            <path d="m8 9 4 4"></path>
+
+                            <path d="m24 9-4 4"></path>
+
+                            <path d="m8 23 4-4"></path>
+
+                            <path d="m24 23-4-4"></path>
+
+                        </svg>
+
+
+                    </div>
+
+
+                    <h3>
+                        ML Predictions
+                    </h3>
+
+
+                    <p>
+                        Machine learning helps estimate
+                        rainfall from weather data.
+                    </p>
+
+
+                </div>
+
+
+
+                <!-- FORECAST -->
+
+                <div class="feature-card">
+
+
+                    <div class="feature-icon forecast-feature">
+
+
+                        <svg
+                            viewBox="0 0 32 32"
+                            width="30"
+                            height="30"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        >
+
+                            <path
+                                d="M7 23V9"
+                            ></path>
+
+                            <path
+                                d="M7 23h19"
+                            ></path>
+
+                            <path
+                                d="m9 19 5-5 4 3 7-8"
+                            ></path>
+
+                            <path
+                                d="M22 9h3v3"
+                            ></path>
+
+                        </svg>
+
+
+                    </div>
+
+
+                    <h3>
+                        Easy Forecast
+                    </h3>
+
+
+                    <p>
+                        Understand today's weather,
+                        hourly changes and future conditions.
+                    </p>
+
+
+                </div>
+
+
+
+                <!-- FARM -->
+
+                <div class="feature-card">
+
+
+                    <div class="feature-icon farm-feature">
+
+
+                        <svg
+                            viewBox="0 0 32 32"
+                            width="30"
+                            height="30"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        >
+
+                            <path
+                                d="M16 27V14"
+                            ></path>
+
+                            <path
+                                d="M16 19C9 19 5 15 5 8c7 0 11 4 11 11"
+                            ></path>
+
+                            <path
+                                d="M16 17c1-6 5-9 11-9 0 7-4 11-11 11"
+                            ></path>
+
+                            <path
+                                d="M6 27h20"
+                            ></path>
+
+                        </svg>
+
+
+                    </div>
+
+
+                    <h3>
+                        Farmer Friendly
+                    </h3>
+
+
+                    <p>
+                        Weather-based agricultural guidance
+                        for better planning.
+                    </p>
+
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+
+
+    <!-- =========================================================
+         15-DAY FORECAST VIEW
+    ========================================================== -->
+
+    <main
+        class="forecast-page"
+        id="forecastView"
+        style="display:none;"
+    >
+
+
+        <!-- HEADER -->
+
+        <section class="forecast-page-header">
+
+
+            <button
+                class="back-btn"
+                type="button"
+                onclick="showHomeView()"
+            >
+
+                <svg
+                    viewBox="0 0 24 24"
+                    width="19"
+                    height="19"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                >
+
+                    <path
+                        d="M19 12H5"
+                    ></path>
+
+                    <path
+                        d="m12 19-7-7 7-7"
+                    ></path>
+
+                </svg>
+
+                Back to Weather
+
+            </button>
+
+
+
+            <div class="forecast-page-title">
+
+
+                <span class="section-kicker">
+                    EXTENDED FORECAST
+                </span>
+
+
+                <h2>
+                    15-Day Weather Forecast
+                </h2>
+
+
+                <p>
+                    Plan your upcoming days with
+                    a longer weather outlook.
+                </p>
+
+
+            </div>
+
+
+        </section>
+
+
+
+
+        <!-- FULL FORECAST -->
+
+        <section class="full-forecast-grid">
+
+
+            <!-- DAY 6 -->
+
+            <div class="full-day-card">
+
+                <p id="dayDate6">
+                    Day 6
+                </p>
+
+                <span
+                    class="full-day-icon"
+                    id="dayIcon6"
+                >
+                    ☀
+                </span>
+
+                <strong id="dayTemp6">
+                    --°C
+                </strong>
+
+                <small id="dayRain6">
+                    --% rain
+                </small>
+
+            </div>
+
+
+
+            <!-- DAY 7 -->
+
+            <div class="full-day-card">
+
+                <p id="dayDate7">
+                    Day 7
+                </p>
+
+                <span
+                    class="full-day-icon"
+                    id="dayIcon7"
+                >
+                    ☀
+                </span>
+
+                <strong id="dayTemp7">
+                    --°C
+                </strong>
+
+                <small id="dayRain7">
+                    --% rain
+                </small>
+
+            </div>
+
+
+
+            <!-- DAY 8 -->
+
+            <div class="full-day-card">
+
+                <p id="dayDate8">
+                    Day 8
+                </p>
+
+                <span
+                    class="full-day-icon"
+                    id="dayIcon8"
+                >
+                    ☀
+                </span>
+
+                <strong id="dayTemp8">
+                    --°C
+                </strong>
+
+                <small id="dayRain8">
+                    --% rain
+                </small>
+
+            </div>
+
+
+
+            <!-- DAY 9 -->
+
+            <div class="full-day-card">
+
+                <p id="dayDate9">
+                    Day 9
+                </p>
+
+                <span
+                    class="full-day-icon"
+                    id="dayIcon9"
+                >
+                    ☀
+                </span>
+
+                <strong id="dayTemp9">
+                    --°C
+                </strong>
+
+                <small id="dayRain9">
+                    --% rain
+                </small>
+
+            </div>
+
+
+
+            <!-- DAY 10 -->
+
+            <div class="full-day-card">
+
+                <p id="dayDate10">
+                    Day 10
+                </p>
+
+                <span
+                    class="full-day-icon"
+                    id="dayIcon10"
+                >
+                    ☀
+                </span>
+
+                <strong id="dayTemp10">
+                    --°C
+                </strong>
+
+                <small id="dayRain10">
+                    --% rain
+                </small>
+
+            </div>
+
+
+
+            <!-- DAY 11 -->
+
+            <div class="full-day-card">
+
+                <p id="dayDate11">
+                    Day 11
+                </p>
+
+                <span
+                    class="full-day-icon"
+                    id="dayIcon11"
+                >
+                    ☀
+                </span>
+
+                <strong id="dayTemp11">
+                    --°C
+                </strong>
+
+                <small id="dayRain11">
+                    --% rain
+                </small>
+
+            </div>
+
+
+
+            <!-- DAY 12 -->
+
+            <div class="full-day-card">
+
+                <p id="dayDate12">
+                    Day 12
+                </p>
+
+                <span
+                    class="full-day-icon"
+                    id="dayIcon12"
+                >
+                    ☀
+                </span>
+
+                <strong id="dayTemp12">
+                    --°C
+                </strong>
+
+                <small id="dayRain12">
+                    --% rain
+                </small>
+
+            </div>
+
+
+
+            <!-- DAY 13 -->
+
+            <div class="full-day-card">
+
+                <p id="dayDate13">
+                    Day 13
+                </p>
+
+                <span
+                    class="full-day-icon"
+                    id="dayIcon13"
+                >
+                    ☀
+                </span>
+
+                <strong id="dayTemp13">
+                    --°C
+                </strong>
+
+                <small id="dayRain13">
+                    --% rain
+                </small>
+
+            </div>
+
+
+
+            <!-- DAY 14 -->
+
+            <div class="full-day-card">
+
+                <p id="dayDate14">
+                    Day 14
+                </p>
+
+                <span
+                    class="full-day-icon"
+                    id="dayIcon14"
+                >
+                    ☀
+                </span>
+
+                <strong id="dayTemp14">
+                    --°C
+                </strong>
+
+                <small id="dayRain14">
+                    --% rain
+                </small>
+
+            </div>
+
+
+
+            <!-- DAY 15 -->
+
+            <div class="full-day-card">
+
+                <p id="dayDate15">
+                    Day 15
+                </p>
+
+                <span
+                    class="full-day-icon"
+                    id="dayIcon15"
+                >
+                    ☀
+                </span>
+
+                <strong id="dayTemp15">
+                    --°C
+                </strong>
+
+                <small id="dayRain15">
+                    --% rain
+                </small>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- NOTE -->
+
+        <div class="forecast-note">
+
+
+            <svg
+                viewBox="0 0 24 24"
+                width="21"
+                height="21"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+            >
+
+                <circle
+                    cx="12"
+                    cy="12"
+                    r="9"
+                ></circle>
+
+                <path
+                    d="M12 11v5"
+                ></path>
+
+                <path
+                    d="M12 8h.01"
+                ></path>
+
+            </svg>
+
+
+            <p>
+
+                Forecast information is updated
+                whenever you search for a location.
+
+            </p>
+
+
+        </div>
+
+
+    </main>
+
+
+
+
+    <!-- =========================================================
+         LANGUAGE MENU
+    ========================================================== -->
+
+    <div
+        class="language-menu"
+        id="languageMenu"
+        style="display:none;"
+    >
+
+
+        <div class="language-menu-inner">
+
+
+            <button
+                type="button"
+                onclick="setLanguage('en')"
+            >
+
+                <span class="language-flag">
+                    EN
+                </span>
+
+                English
+
+            </button>
+
+
+
+            <button
+                type="button"
+                onclick="setLanguage('hi')"
+            >
+
+                <span class="language-flag">
+                    HI
+                </span>
+
+                हिंदी
+
+            </button>
+
+
+
+            <button
+                type="button"
+                onclick="setLanguage('mr')"
+            >
+
+                <span class="language-flag">
+                    MR
+                </span>
+
+                मराठी
+
+            </button>
+
+
+        </div>
+
+
+    </div>
+
+
+
+
+    <!-- =========================================================
+         FOOTER
+    ========================================================== -->
+
+    <footer class="footer">
+
+
+        <div class="footer-inner">
+
+
+            <div class="footer-brand">
+
+
+                <div class="brand-logo small-logo">
+
+                    <svg
+                        viewBox="0 0 64 64"
+                        width="27"
+                        height="27"
+                        fill="none"
+                    >
+
+                        <path
+                            d="M18 48h29c7 0 12-5 12-11s-5-11-11-11c-1-8-7-13-15-13-8 0-15 6-16 14-7 0-12 5-12 11s6 10 13 10Z"
+                            fill="currentColor"
+                        />
+
+                    </svg>
+
+                </div>
+
+
+                <div>
+
+                    <strong>
+                        WeatherWise
+                    </strong>
+
+                    <p>
+                        Smart Weather Forecasting System
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="footer-info">
+
+
+                <span>
+                    Real-time weather
+                </span>
+
+                <span>•</span>
+
+                <span>
+                    ML prediction
+                </span>
+
+                <span>•</span>
+
+                <span>
+                    AI insights
+                </span>
+
+                <span>•</span>
+
+                <span>
+                    Agriculture advisory
+                </span>
+
+
+            </div>
+
+
+        </div>
+
+
+    </footer>
+
+
+
+
+    <!-- =========================================================
+         MAIN JAVASCRIPT
+    ========================================================== -->
+
+    <script src="script.js"></script>
+
+
+
+
+    <!-- =========================================================
+         UI HELPERS
+    ========================================================== -->
+
+    <script>
+
+
+        /* =====================================================
+           HOME VIEW
+        ====================================================== */
+
+        function showHomeView() {
+
+
+            const home =
+                document.getElementById("homeView");
+
+
+            const forecast =
+                document.getElementById("forecastView");
+
+
+            if (home) {
+
+                home.style.display = "block";
+
+            }
+
+
+            if (forecast) {
+
+                forecast.style.display = "none";
+
+            }
+
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+
+        }
+
+
+
+
+        /* =====================================================
+           15-DAY VIEW
+        ====================================================== */
+
+        function showForecastView() {
+
+
+            const home =
+                document.getElementById("homeView");
+
+
+            const forecast =
+                document.getElementById("forecastView");
+
+
+            if (home) {
+
+                home.style.display = "none";
+
+            }
+
+
+            if (forecast) {
+
+                forecast.style.display = "block";
+
+            }
+
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+
+        }
+
+
+
+
+        /* =====================================================
+           SCROLL
+        ====================================================== */
+
+        function scrollToSection(id) {
+
+
+            const section =
+                document.getElementById(id);
+
+
+            if (section) {
+
+                section.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+
+            }
+
+
+        }
+
+
+
+
+        /* =====================================================
+           CLEAR SEARCH
+        ====================================================== */
+
+        function clearLocationSearch() {
+
+
+            const input =
+                document.getElementById(
+                    "locationInput"
+                );
+
+
+            if (input) {
+
+                input.value = "";
+
+                input.focus();
+
+            }
+
+
+        }
+
+
+
+
+        /* =====================================================
+           LANGUAGE MENU
+        ====================================================== */
+
+        function toggleLanguageMenu() {
+
+
+            const menu =
+                document.getElementById(
+                    "languageMenu"
+                );
+
+
+            if (!menu) {
+
+                return;
+
+            }
+
+
+            if (
+                menu.style.display === "none" ||
+                menu.style.display === ""
+            ) {
+
+                menu.style.display = "block";
+
+            }
+
+            else {
+
+                menu.style.display = "none";
+
+            }
+
+
+        }
+
+
+
+
+        /* =====================================================
+           LANGUAGE
+        ====================================================== */
+
+        function setLanguage(language) {
+
+
+            const currentLanguage =
+                document.getElementById(
+                    "currentLanguage"
+                );
+
+
+            if (!currentLanguage) {
+
+                return;
+
+            }
+
+
+            if (language === "hi") {
+
+                currentLanguage.innerText = "HI";
+
+            }
+
+            else if (language === "mr") {
+
+                currentLanguage.innerText = "MR";
+
+            }
+
+            else {
+
+                currentLanguage.innerText = "EN";
+
+            }
+
+
+            const menu =
+                document.getElementById(
+                    "languageMenu"
+                );
+
+
+            if (menu) {
+
+                menu.style.display = "none";
+
+            }
+
+
+        }
+
+
+
+
+        /* =====================================================
+           AI QUICK QUESTIONS
+        ====================================================== */
+
+        function showAIQuestion(question) {
+
+
+            const insight =
+                document.getElementById(
+                    "aiInsight"
+                );
+
+
+            if (!insight) {
+
+                return;
+
+            }
+
+
+            const temperatureElement =
+                document.getElementById(
+                    "temperature"
+                );
+
+
+            const rainfallElement =
+                document.getElementById(
+                    "predictedRainfall"
+                );
+
+
+            const temperature =
+                temperatureElement
+                    ? temperatureElement.innerText
+                    : "--";
+
+
+            const rainfall =
+                rainfallElement
+                    ? rainfallElement.innerText
+                    : "--";
+
+
+
+            if (question === "rain") {
+
+
+                insight.innerText =
+                    `Based on the current weather data, the predicted rainfall is ${rainfall}. Check the hourly forecast to understand when rain may occur.`;
+
+
+            }
+
+
+            else if (question === "travel") {
+
+
+                insight.innerText =
+                    `The current temperature is ${temperature}. Check the hourly forecast and Smart Weather Alert before planning outdoor travel.`;
+
+
+            }
+
+
+            else if (question === "umbrella") {
+
+
+                insight.innerText =
+                    `The current rainfall prediction is ${rainfall}. If the rain probability is high, carrying an umbrella is recommended.`;
+
+
+            }
+
+
+        }
+
+
+
+
+        /* =====================================================
+           CLOSE LANGUAGE MENU
+        ====================================================== */
+
+        document.addEventListener(
+            "click",
+            function(event) {
+
+
+                const menu =
+                    document.getElementById(
+                        "languageMenu"
+                    );
+
+
+                const button =
+                    document.querySelector(
+                        ".language-btn"
+                    );
+
+
+                if (
+                    menu &&
+                    button &&
+                    !menu.contains(event.target) &&
+                    !button.contains(event.target)
+                ) {
+
+                    menu.style.display = "none";
+
+                }
+
+
+            }
+        );
+
+
+
+
+        /* =====================================================
+           ENTER KEY SEARCH
+        ====================================================== */
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function() {
+
+
+                const input =
+                    document.getElementById(
+                        "locationInput"
+                    );
+
+
+                if (input) {
+
+
+                    input.addEventListener(
+                        "keydown",
+                        function(event) {
+
+
+                            if (
+                                event.key === "Enter"
+                            ) {
+
+
+                                event.preventDefault();
+
+
+                                if (
+                                    typeof searchWeather ===
+                                    "function"
+                                ) {
+
+                                    searchWeather();
+
+                                }
+
+
+                            }
+
+
+                        }
+                    );
+
+
+                }
+
+
+            }
+        );
+
+
+    </script>
+
+
+</body>
+
+</html>

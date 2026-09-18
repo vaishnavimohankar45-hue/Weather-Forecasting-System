@@ -1532,3 +1532,80 @@ body.storm .current-left {
     }
 
 }
+/* =========================================================
+   DYNAMIC WEATHER BACKGROUND - CSS ONLY
+   ========================================================= */
+
+body {
+    min-height: 100vh;
+    transition: background 0.6s ease;
+}
+
+/* Sunny */
+body.weather-sunny {
+    background: linear-gradient(
+        135deg,
+        #62b9f4,
+        #dff6ff 50%,
+        #ffd07c
+    );
+}
+
+/* Cloudy */
+body.weather-cloudy {
+    background: linear-gradient(
+        135deg,
+        #9bbbd0,
+        #eaf5fb 50%,
+        #7895a7
+    );
+}
+
+/* Rain */
+body.weather-rain {
+    background: linear-gradient(
+        135deg,
+        #6f8fa5,
+        #b8c6d1,
+        #526f82
+    );
+}
+
+/* Storm */
+body.weather-storm {
+    background: linear-gradient(
+        135deg,
+        #07152e,
+        #253d5c,
+        #0a1631
+    );
+}
+
+/* Fog */
+body.weather-fog {
+    background: linear-gradient(
+        135deg,
+        #c8d1d5,
+        #eef2f3,
+        #aebbc1
+    );
+}
+
+/* Snow */
+body.weather-snow {
+    background: linear-gradient(
+        135deg,
+        #f8fbff,
+        #dceeff,
+        #ffffff
+    );
+}
+
+/* Default */
+body.weather-default {
+    background: linear-gradient(
+        135deg,
+        #eef4f8,
+        #dfeaf1
+    );
+}

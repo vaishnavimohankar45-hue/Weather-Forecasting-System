@@ -213,13 +213,13 @@ function updateWeather(data) {
     );
 
 
-    // --------------------------------------------------------
-    // Weather background
-    // --------------------------------------------------------
+// --------------------------------------------------------
+// Weather background
+// --------------------------------------------------------
 
-    document.body.className =
-        data.weather_theme;
-
+updateWeatherBackground(
+    data.weather_code
+);
 
     // --------------------------------------------------------
     // Hide error
@@ -801,3 +801,97 @@ window.addEventListener(
 
     }
 );
+// ============================================================
+// DYNAMIC WEATHER BACKGROUND
+// ============================================================
+
+function updateWeatherBackground(weatherCode) {
+
+    const body = document.body;
+
+    body.classList.remove(
+        "weather-default",
+        "weather-sunny",
+        "weather-cloudy",
+        "weather-rain",
+        "weather-storm",
+        "weather-fog",
+        "weather-snow"
+    );
+
+
+    let weatherClass = "weather-default";
+
+
+    if (weatherCode === 0) {
+
+        weatherClass = "weather-sunny";
+
+    }
+
+    else if (
+        weatherCode >= 1 &&
+        weatherCode <= 3
+    ) {
+
+        weatherClass = "weather-cloudy";
+
+    }
+
+    else if (
+        weatherCode >= 45 &&
+        weatherCode <= 48
+    ) {
+
+        weatherClass = "weather-fog";
+
+    }
+
+    else if (
+        weatherCode >= 51 &&
+        weatherCode <= 67
+    ) {
+
+        weatherClass = "weather-rain";
+
+    }
+
+    else if (
+        weatherCode >= 71 &&
+        weatherCode <= 77
+    ) {
+
+        weatherClass = "weather-snow";
+
+    }
+
+    else if (
+        weatherCode >= 80 &&
+        weatherCode <= 82
+    ) {
+
+        weatherClass = "weather-rain";
+
+    }
+
+    else if (
+        weatherCode >= 85 &&
+        weatherCode <= 86
+    ) {
+
+        weatherClass = "weather-snow";
+
+    }
+
+    else if (
+        weatherCode >= 95 &&
+        weatherCode <= 99
+    ) {
+
+        weatherClass = "weather-storm";
+
+    }
+
+
+    body.classList.add(weatherClass);
+}

@@ -1533,79 +1533,149 @@ body.storm .current-left {
 
 }
 /* =========================================================
-   DYNAMIC WEATHER BACKGROUND - CSS ONLY
+   DYNAMIC WEATHER BACKGROUND
    ========================================================= */
 
 body {
     min-height: 100vh;
-    transition: background 0.6s ease;
+    background-color: #dff3ff;
+    background-size: cover !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    background-attachment: fixed;
+    transition: background-image 0.6s ease, background-color 0.6s ease;
 }
+
+/* Readability overlay */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.18);
+    z-index: -1;
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   DAY WEATHER
+   ========================================================= */
 
 /* Sunny */
 body.weather-sunny {
-    background: linear-gradient(
-        135deg,
-        #62b9f4,
-        #dff6ff 50%,
-        #ffd07c
-    );
+    background-image: url("images/sunny.jpg") !important;
 }
 
 /* Cloudy */
 body.weather-cloudy {
-    background: linear-gradient(
-        135deg,
-        #9bbbd0,
-        #eaf5fb 50%,
-        #7895a7
-    );
+    background-image: url("images/cloudy.jpg") !important;
 }
 
 /* Rain */
 body.weather-rain {
-    background: linear-gradient(
-        135deg,
-        #6f8fa5,
-        #b8c6d1,
-        #526f82
-    );
+    background-image: url("images/rainy.jpg") !important;
 }
 
 /* Storm */
 body.weather-storm {
-    background: linear-gradient(
-        135deg,
-        #07152e,
-        #253d5c,
-        #0a1631
-    );
+    background-image: url("images/storm.jpg") !important;
 }
 
 /* Fog */
 body.weather-fog {
-    background: linear-gradient(
-        135deg,
-        #c8d1d5,
-        #eef2f3,
-        #aebbc1
-    );
+    background-image: url("images/fog.jpg") !important;
 }
 
 /* Snow */
 body.weather-snow {
-    background: linear-gradient(
-        135deg,
-        #f8fbff,
-        #dceeff,
-        #ffffff
-    );
+    background-image: url("images/snow.jpg") !important;
 }
 
-/* Default */
+
+/* =========================================================
+   NIGHT WEATHER
+   ========================================================= */
+
+body.weather-night {
+    background-image: url("images/cloudy.jpg") !important;
+    background-color: #101a35;
+}
+
+/* Clear night */
+body.weather-night-clear {
+    background-image: url("images/cloudy.jpg") !important;
+    background-color: #101a35;
+}
+
+/* Rainy night */
+body.weather-night-rain {
+    background-image: url("images/rainy.jpg") !important;
+    background-color: #111827;
+}
+
+/* Stormy night */
+body.weather-night-storm {
+    background-image: url("images/storm.jpg") !important;
+    background-color: #111827;
+}
+
+/* Foggy night */
+body.weather-night-fog {
+    background-image: url("images/fog.jpg") !important;
+    background-color: #202936;
+}
+
+
+/* =========================================================
+   DEFAULT
+   ========================================================= */
+
 body.weather-default {
-    background: linear-gradient(
-        135deg,
-        #eef4f8,
-        #dfeaf1
-    );
+    background-image: url("images/cloudy.jpg") !important;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    body {
+        background-attachment: scroll;
+        background-size: cover !important;
+        background-repeat: no-repeat !important;
+    }
+}
+/* =========================================================
+   NIGHT WEATHER
+   ========================================================= */
+
+body.weather-night-clear {
+    background-image: url("images/cloudy.jpg") !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-color: #101a35;
+}
+
+body.weather-night-rain {
+    background-image: url("images/rainy.jpg") !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+}
+
+body.weather-night-storm {
+    background-image: url("images/storm.jpg") !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+}
+
+body.weather-night-fog {
+    background-image: url("images/fog.jpg") !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
 }

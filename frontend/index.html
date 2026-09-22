@@ -150,28 +150,23 @@
 
         <header class="topbar">
 
+<form class="search-box" id="searchForm">
+    <input
+        type="text"
+        id="locationInput"
+        placeholder="Search city, town or village..."
+        autocomplete="off"
+    >
 
-            <form
-                class="search-box"
-                id="searchForm"
-            >
-
-                <input
-                    type="text"
-                    id="cityInput"
-                    placeholder="Search city, town or village..."
-                    autocomplete="off"
-                >
-
-
-                <button
-                    type="submit"
-                    id="searchButton"
-                >
-                    ⌕
-                </button>
-
-            </form>
+    <button
+        type="button"
+        id="searchBtn"
+    >
+     ⌕
+        
+    </button>
+</form>
+            
 
 
             <button
@@ -232,7 +227,7 @@
                             </h2>
 
                             <small
-                                id="weatherDate"
+                                id="currentDate"
                             >
                                 Loading...
                             </small>
@@ -265,7 +260,7 @@
                         <div class="condition">
 
                             <strong
-                                id="condition"
+                                id="weatherCondition"
                             >
                                 Loading...
                             </strong>

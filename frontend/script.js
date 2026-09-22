@@ -405,7 +405,7 @@ function createHourlyForecast(
 
     const container =
         document.getElementById(
-            "hourlyForecast"
+            "hourlyContainer"
         );
 
 
@@ -547,7 +547,7 @@ function createDailyForecast(
 
     const container =
         document.getElementById(
-            "dailyForecast"
+            "dailyContainer"
         );
 
 

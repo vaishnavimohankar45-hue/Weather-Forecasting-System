@@ -53,8 +53,10 @@
 
         <nav class="nav">
 
+            <!-- HOME -->
+
             <a
-                href="#"
+                href="#home"
                 class="nav-item active"
             >
 
@@ -68,6 +70,8 @@
 
             </a>
 
+
+            <!-- FORECAST -->
 
             <a
                 href="#forecast"
@@ -85,8 +89,10 @@
             </a>
 
 
+            <!-- AI INSIGHTS -->
+
             <a
-                href="#insights"
+                href="#aiInsights"
                 class="nav-item"
             >
 
@@ -100,6 +106,8 @@
 
             </a>
 
+
+            <!-- AGRICULTURE -->
 
             <a
                 href="#agriculture"
@@ -116,6 +124,8 @@
 
             </a>
 
+
+            <!-- ALERTS -->
 
             <a
                 href="#alerts"
@@ -146,28 +156,40 @@
     <main class="main">
 
 
-        <!-- TOP BAR -->
+        <!-- =================================================
+             TOP BAR
+             ================================================= -->
 
         <header class="topbar">
 
-<form class="search-box" id="searchForm">
-    <input
-        type="text"
-        id="locationInput"
-        placeholder="Search city, town or village..."
-        autocomplete="off"
-    >
 
-    <button
-        type="button"
-        id="searchBtn"
-    >
-     ⌕
-        
-    </button>
-</form>
-            
+            <!-- SEARCH -->
 
+            <form
+                class="search-box"
+                id="searchForm"
+            >
+
+                <input
+                    type="text"
+                    id="locationInput"
+                    placeholder="Search city, town or village..."
+                    autocomplete="off"
+                >
+
+
+                <button
+                    type="button"
+                    id="searchBtn"
+                >
+                    ⌕
+                </button>
+
+            </form>
+
+
+
+            <!-- CURRENT LOCATION -->
 
             <button
                 class="location-button"
@@ -180,20 +202,26 @@
             </button>
 
 
+
+            <!-- PROFILE -->
+
             <div class="profile">
                 ●
             </div>
+
 
         </header>
 
 
 
-        <!-- CONTENT -->
+        <!-- =================================================
+             CONTENT
+             ================================================= -->
 
         <section class="content">
 
 
-            <!-- ERROR -->
+            <!-- ERROR MESSAGE -->
 
             <div
                 id="errorMessage"
@@ -206,11 +234,16 @@
                  CURRENT WEATHER
                  ================================================= -->
 
-            <section class="current-card">
+            <section
+                class="current-card"
+                id="home"
+            >
 
 
                 <div class="current-left">
 
+
+                    <!-- LOCATION -->
 
                     <div class="place">
 
@@ -218,17 +251,15 @@
                             📍
                         </span>
 
+
                         <div>
 
-                            <h2
-                                id="locationName"
-                            >
+                            <h2 id="locationName">
                                 Loading...
                             </h2>
 
-                            <small
-                                id="currentDate"
-                            >
+
+                            <small id="currentDate">
                                 Loading...
                             </small>
 
@@ -237,6 +268,8 @@
                     </div>
 
 
+
+                    <!-- CURRENT WEATHER -->
 
                     <div class="current-weather">
 
@@ -259,15 +292,12 @@
 
                         <div class="condition">
 
-                            <strong
-                                id="weatherCondition"
-                            >
+                            <strong id="weatherCondition">
                                 Loading...
                             </strong>
 
-                            <small
-                                id="feelsLike"
-                            >
+
+                            <small id="feelsLike">
                                 Feels like --°C
                             </small>
 
@@ -281,10 +311,14 @@
 
 
 
-                <!-- WEATHER STATS -->
+                <!-- =================================================
+                     WEATHER STATS
+                     ================================================= -->
 
                 <div class="weather-stats">
 
+
+                    <!-- HUMIDITY -->
 
                     <div class="stat">
 
@@ -306,6 +340,9 @@
                     </div>
 
 
+
+                    <!-- WIND -->
+
                     <div class="stat">
 
                         <span class="stat-icon">
@@ -326,6 +363,9 @@
                     </div>
 
 
+
+                    <!-- RAINFALL -->
+
                     <div class="stat">
 
                         <span class="stat-icon">
@@ -345,6 +385,9 @@
 
                     </div>
 
+
+
+                    <!-- UV -->
 
                     <div class="stat">
 
@@ -385,13 +428,19 @@
 
                 <div class="section-header">
 
+
                     <h3>
                         Hourly Forecast
                     </h3>
 
-                    <a href="#">
+
+                    <a
+                        href="#forecast"
+                        id="nextHoursBtn"
+                    >
                         Next 6 Hours →
                     </a>
+
 
                 </div>
 
@@ -401,7 +450,7 @@
                     id="hourlyContainer"
                 >
 
-                    <!-- JavaScript creates cards -->
+                    <!-- JavaScript creates hourly cards -->
 
                 </div>
 
@@ -414,36 +463,53 @@
                  DAILY FORECAST
                  ================================================= -->
 
-            <section class="panel">
+            <section
+                class="panel"
+                id="dailyForecast"
+            >
 
 
                 <div class="tabs">
 
+
                     <button
+                        type="button"
                         class="tab active"
+                        id="sevenDayTab"
                     >
                         7-Day Forecast
                     </button>
 
+
                     <button
+                        type="button"
                         class="tab"
+                        id="fifteenDayTab"
                     >
                         15-Day Forecast
                     </button>
 
-                    <a href="#">
+
+                    <button
+                        type="button"
+                        class="view-15-button"
+                        id="fullForecast"
+                    >
                         View 15 Days →
-                    </a>
+                    </button>
+
 
                 </div>
 
+
+                <!-- 7 DAY FORECAST -->
 
                 <div
                     class="daily-grid"
                     id="dailyContainer"
                 >
 
-                    <!-- JavaScript creates cards -->
+                    <!-- JavaScript creates 7-day cards -->
 
                 </div>
 
@@ -453,7 +519,51 @@
 
 
             <!-- =================================================
-                 INFO CARDS
+                 15 DAY FORECAST
+                 ================================================= -->
+
+            <section
+                class="panel"
+                id="forecast15"
+                hidden
+            >
+
+
+                <div class="section-header">
+
+
+                    <h3>
+                        15-Day Weather Forecast
+                    </h3>
+
+
+                    <button
+                        type="button"
+                        id="close15Day"
+                    >
+                        ← Back to 7 Days
+                    </button>
+
+
+                </div>
+
+
+                <div
+                    class="daily-grid"
+                    id="forecast15Grid"
+                >
+
+                    <!-- JavaScript creates 15-day cards -->
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- =================================================
+                 AI + AGRICULTURE + ALERTS
                  ================================================= -->
 
             <section
@@ -462,9 +572,16 @@
             >
 
 
-                <!-- AI INSIGHT -->
+                <!-- =================================================
+                     AI INSIGHTS
+                     ================================================= -->
 
-                <div class="info-card ai">
+                <div
+                    class="info-card ai"
+                    id="aiInsights"
+                    tabindex="0"
+                >
+
 
                     <div class="info-icon">
                         🤖
@@ -477,6 +594,7 @@
                             AI Weather Insight
                         </small>
 
+
                         <p id="aiInsight">
                             Loading weather insight...
                         </p>
@@ -488,16 +606,21 @@
                         ›
                     </span>
 
+
                 </div>
 
 
 
-                <!-- AGRICULTURE -->
+                <!-- =================================================
+                     AGRICULTURE
+                     ================================================= -->
 
                 <div
                     class="info-card agriculture"
                     id="agriculture"
+                    tabindex="0"
                 >
+
 
                     <div class="info-icon">
                         🌱
@@ -510,9 +633,8 @@
                             Agriculture Advisory
                         </small>
 
-                        <p
-                            id="agricultureAdvice"
-                        >
+
+                        <p id="agricultureAdvice">
                             Loading agriculture advice...
                         </p>
 
@@ -523,16 +645,21 @@
                         ›
                     </span>
 
+
                 </div>
 
 
 
-                <!-- ALERT -->
+                <!-- =================================================
+                     WEATHER ALERT
+                     ================================================= -->
 
                 <div
                     class="info-card alert"
-                    id="alertCard"
+                    id="alerts"
+                    tabindex="0"
                 >
+
 
                     <div class="info-icon">
                         ⚠️
@@ -541,15 +668,12 @@
 
                     <div class="info-content">
 
-                        <small
-                            id="alertTitle"
-                        >
+                        <small id="alertTitle">
                             Weather Alert
                         </small>
 
-                        <p
-                            id="alertMessage"
-                        >
+
+                        <p id="alertMessage">
                             Loading weather alerts...
                         </p>
 
@@ -559,6 +683,7 @@
                     <span class="info-arrow">
                         ›
                     </span>
+
 
                 </div>
 
@@ -573,13 +698,7 @@
 
 
 </div>
-
-
-<!-- JAVASCRIPT -->
-
 <script src="script.js"></script>
-
-
 </body>
 
 </html>

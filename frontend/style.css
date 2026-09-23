@@ -1314,7 +1314,7 @@ body.storm {
    NIGHT / STORM
    ============================================================ */
 
-body.storm .sidebar {
+body.weather-storm .sidebar {
 
     background:
         rgba(
@@ -1327,15 +1327,15 @@ body.storm .sidebar {
 }
 
 
-body.storm .brand h1,
-body.storm .nav-item {
+body.weather-storm .brand h1,
+body.weather-storm .nav-item {
 
     color: white;
 
 }
 
 
-body.storm .location-button {
+body.weather-storm .location-button {
 
     color: white;
 
@@ -1350,7 +1350,7 @@ body.storm .location-button {
 }
 
 
-body.storm .current-left {
+body.weather-storm .current-left {
 
     background:
         linear-gradient(
@@ -1678,4 +1678,756 @@ body.weather-night-fog {
     background-size: cover !important;
     background-position: center !important;
     background-repeat: no-repeat !important;
+}
+/* =========================================================
+   WEATHERWISE - NEW NAVIGATION + FORECAST UI
+   ========================================================= */
+
+
+/* =========================================================
+   SMOOTH PAGE NAVIGATION
+   ========================================================= */
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+/* =========================================================
+   NAVIGATION FOCUS EFFECT
+   ========================================================= */
+
+.navigation-focus {
+    animation: navigationFocus 1.2s ease;
+}
+
+
+@keyframes navigationFocus {
+
+    0% {
+        transform: translateY(0);
+        box-shadow:
+            0 8px 22px
+            rgba(20, 70, 110, 0.10);
+    }
+
+    35% {
+        transform: translateY(-2px);
+        box-shadow:
+            0 0 0 4px
+            rgba(7, 136, 237, 0.14),
+            0 12px 30px
+            rgba(7, 136, 237, 0.18);
+    }
+
+    100% {
+        transform: translateY(0);
+        box-shadow:
+            0 8px 22px
+            rgba(20, 70, 110, 0.10);
+    }
+
+}
+
+
+/* =========================================================
+   CLICKABLE INFO CARDS
+   ========================================================= */
+
+.info-card {
+    cursor: pointer;
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease;
+}
+
+
+.info-card:hover {
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 12px 28px
+        rgba(
+            20,
+            70,
+            110,
+            0.16
+        );
+
+}
+
+
+.info-card:active {
+
+    transform:
+        translateY(-1px)
+        scale(0.99);
+
+}
+
+
+/* =========================================================
+   15-DAY FORECAST SECTION
+   ========================================================= */
+
+#forecast15 {
+
+    margin-top: 11px;
+
+    animation:
+        forecastAppear
+        0.35s
+        ease;
+
+}
+
+
+#forecast15[hidden] {
+
+    display: none !important;
+
+}
+
+
+@keyframes forecastAppear {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(12px);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0);
+
+    }
+
+}
+
+
+/* =========================================================
+   15-DAY FORECAST GRID
+   ========================================================= */
+
+#forecast15Grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            5,
+            1fr
+        );
+
+    gap: 8px;
+
+}
+
+
+/* =========================================================
+   15-DAY FORECAST CARDS
+   ========================================================= */
+
+#forecast15Grid .day-card {
+
+    min-height: 95px;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+
+}
+
+
+#forecast15Grid .day-card:hover {
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 8px 18px
+        rgba(
+            20,
+            70,
+            110,
+            0.12
+        );
+
+}
+
+
+/* =========================================================
+   BACK TO 7 DAYS BUTTON
+   ========================================================= */
+
+#close15Day {
+
+    margin-left: auto;
+
+    border: none;
+
+    border-radius: 8px;
+
+    padding:
+        6px 10px;
+
+    background:
+        rgba(
+            7,
+            136,
+            237,
+            0.10
+        );
+
+    color:
+        #0878dc;
+
+    font-size: 8px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        0.2s ease;
+
+}
+
+
+#close15Day:hover {
+
+    background:
+        rgba(
+            7,
+            136,
+            237,
+            0.18
+        );
+
+    transform:
+        translateX(-2px);
+
+}
+
+
+/* =========================================================
+   VIEW 15 DAYS BUTTON
+   ========================================================= */
+
+.view-15-button {
+
+    margin-left: auto;
+
+    border: none;
+
+    background:
+        transparent;
+
+    color:
+        #0878dc;
+
+    font-size: 7px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    padding:
+        5px 8px;
+
+    border-radius: 7px;
+
+    transition:
+        0.2s ease;
+
+}
+
+
+.view-15-button:hover {
+
+    background:
+        rgba(
+            7,
+            136,
+            237,
+            0.08
+        );
+
+}
+
+
+/* =========================================================
+   TAB BUTTON IMPROVEMENT
+   ========================================================= */
+
+.tab {
+
+    transition:
+        color 0.2s ease,
+        background 0.2s ease,
+        border 0.2s ease;
+
+}
+
+
+.tab:hover {
+
+    color:
+        #087ce2;
+
+}
+
+
+/* =========================================================
+   FORECAST SECTION HEADER BUTTON
+   ========================================================= */
+
+.section-header button {
+
+    border: none;
+
+    background:
+        transparent;
+
+    color:
+        #0878dc;
+
+    font-size: 8px;
+
+    cursor: pointer;
+
+}
+
+
+/* =========================================================
+   SIDEBAR NAVIGATION
+   ========================================================= */
+
+.nav-item {
+
+    cursor: pointer;
+
+}
+
+
+.nav-item.active {
+
+    transform:
+        translateX(1px);
+
+}
+
+
+.nav-item:active {
+
+    transform:
+        scale(0.98);
+
+}
+
+
+/* =========================================================
+   ALERT STATES
+   ========================================================= */
+
+.alert.safe {
+
+    border-left-color:
+        #5bbd67;
+
+}
+
+
+.alert.warning {
+
+    border-left-color:
+        #f1a53c;
+
+}
+
+
+.alert.danger {
+
+    border-left-color:
+        #e64949;
+
+}
+
+
+.alert.danger .info-icon {
+
+    background:
+        #ffd6d6;
+
+}
+
+
+.alert.danger .info-content small {
+
+    color:
+        #d93636;
+
+}
+
+
+/* =========================================================
+   WEATHER BACKGROUND READABILITY
+   ========================================================= */
+
+body {
+
+    background-size:
+        cover;
+
+    background-position:
+        center;
+
+    background-repeat:
+        no-repeat;
+
+    background-attachment:
+        fixed;
+
+}
+
+
+/*
+   Keep application content above background.
+*/
+
+.app {
+
+    position: relative;
+
+    z-index: 1;
+
+}
+
+
+/* =========================================================
+   WEATHER BACKGROUND OVERLAY
+   ========================================================= */
+
+body::before {
+
+    content: "";
+
+    position: fixed;
+
+    inset: 0;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.10
+        );
+
+    pointer-events: none;
+
+    z-index: 0;
+
+}
+
+
+/* =========================================================
+   NIGHT READABILITY
+   ========================================================= */
+
+body.weather-night-clear::before,
+body.weather-night-rain::before,
+body.weather-night-storm::before,
+body.weather-night-fog::before {
+
+    background:
+        rgba(
+            5,
+            15,
+            35,
+            0.22
+        );
+
+}
+
+
+/* =========================================================
+   STORM READABILITY
+   ========================================================= */
+
+body.weather-storm::before {
+
+    background:
+        rgba(
+            5,
+            15,
+            35,
+            0.25
+        );
+
+}
+
+
+/* =========================================================
+   RESPONSIVE - 15 DAY
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    #forecast15Grid {
+
+        grid-template-columns:
+            repeat(
+                4,
+                1fr
+            );
+
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    #forecast15Grid {
+
+        grid-template-columns:
+            repeat(
+                3,
+                1fr
+            );
+
+    }
+
+}
+
+
+@media (max-width: 430px) {
+
+    #forecast15Grid {
+
+        grid-template-columns:
+            repeat(
+                2,
+                1fr
+            );
+
+    }
+
+
+    .tabs {
+
+        flex-wrap: wrap;
+
+    }
+
+
+    .view-15-button {
+
+        width: 100%;
+
+        margin-left: 0;
+
+        text-align: left;
+
+        padding-left: 8px;
+
+    }
+
+}
+/* =========================================================
+   FINAL WEATHERWISE NAVIGATION FIX
+   ========================================================= */
+
+html {
+    scroll-behavior: smooth;
+}
+
+section[id] {
+    scroll-margin-top: 20px;
+}
+
+/* Navigation focus */
+.navigation-focus {
+    animation: navigationFocus 1.2s ease;
+}
+
+@keyframes navigationFocus {
+    0% {
+        box-shadow: 0 8px 22px rgba(20, 70, 110, 0.10);
+    }
+
+    35% {
+        box-shadow:
+            0 0 0 4px rgba(7, 136, 237, 0.14),
+            0 12px 30px rgba(7, 136, 237, 0.18);
+    }
+
+    100% {
+        box-shadow: 0 8px 22px rgba(20, 70, 110, 0.10);
+    }
+}
+
+/* Clickable cards */
+.info-card {
+    cursor: pointer;
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.info-card:hover {
+    transform: translateY(-3px);
+    box-shadow:
+        0 12px 28px
+        rgba(20, 70, 110, 0.16);
+}
+
+/* 15-Day Forecast */
+#forecast15 {
+    margin-top: 11px;
+    animation: forecastAppear 0.35s ease;
+}
+
+#forecast15[hidden] {
+    display: none !important;
+}
+
+@keyframes forecastAppear {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#forecast15Grid {
+    display: grid;
+   grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+}
+
+/* 15-Day cards */
+#forecast15Grid .day-card {
+    min-height: 95px;
+
+      display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 5px;
+
+    border-radius: 10px;
+
+    background: rgba(244, 251, 255, 0.9);
+
+    transition: 0.2s ease;
+}
+
+#forecast15Grid .day-card:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 8px 18px
+        rgba(20, 70, 110, 0.12);
+}
+
+/* View 15 Days */
+.view-15-button {
+    margin-left: auto;
+
+    border: none;
+
+    background: transparent;
+
+    color: #0878dc;
+
+    font-size: 7px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    padding: 5px 8px;
+
+    border-radius: 7px;
+
+    transition: 0.2s ease;
+}
+
+.view-15-button:hover {
+    background: rgba(7, 136, 237, 0.08);
+}
+
+/* Back button */
+#close15Day {
+    margin-left: auto;
+
+    border: none;
+
+    border-radius: 8px;
+
+    padding: 6px 10px;
+
+    background: rgba(7, 136, 237, 0.10);
+
+    color: #0878dc;
+
+    font-size: 8px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+#close15Day:hover {
+    background: rgba(7, 136, 237, 0.18);
+}
+
+/* Alert states */
+.alert.safe {
+    border-left-color: #5bbd67;
+}
+
+.alert.warning {
+    border-left-color: #f1a53c;
+}
+
+.alert.danger {
+    border-left-color: #e64949;
+}
+
+/* Responsive 15-day */
+@media (max-width: 900px) {
+    #forecast15Grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 650px) {
+    #forecast15Grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 430px) {
+    #forecast15Grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }

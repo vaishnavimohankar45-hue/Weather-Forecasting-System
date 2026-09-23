@@ -13,6 +13,9 @@ const locationInput =
 const searchBtn =
     document.getElementById("searchBtn");
 
+const searchForm =
+    document.getElementById("searchForm");
+
 const errorMessage =
     document.getElementById("errorMessage");
 
@@ -34,6 +37,38 @@ if (searchBtn) {
     searchBtn.addEventListener(
         "click",
         function () {
+
+            const location =
+                locationInput
+                    ? locationInput.value.trim()
+                    : "";
+
+            if (!location) {
+
+                showError(
+                    "Please enter a city, town or village name."
+                );
+
+                return;
+            }
+
+            getWeather(location);
+        }
+    );
+}
+
+
+// ============================================================
+// SEARCH FORM
+// ============================================================
+
+if (searchForm) {
+
+    searchForm.addEventListener(
+        "submit",
+        function (event) {
+
+            event.preventDefault();
 
             const location =
                 locationInput
@@ -129,10 +164,12 @@ async function getWeather(location) {
             error
         );
 
+
         showError(
             error.message ||
             "Unable to fetch weather data."
         );
+
 
     } finally {
 
@@ -230,7 +267,7 @@ function updateWeather(data) {
 
 
     // --------------------------------------------------------
-    // WEATHER DETAILS
+    // WEATHER STATS
     // --------------------------------------------------------
 
     setText(
@@ -250,6 +287,26 @@ function updateWeather(data) {
 
 
     setText(
+        "rainfall",
+        data.current_rainfall !== undefined
+            ? `${data.current_rainfall} mm`
+            : "--"
+    );
+
+
+    setText(
+        "uvIndex",
+        formatUV(
+            data.uv_index
+        )
+    );
+
+
+    // --------------------------------------------------------
+    // EXTRA DETAILS
+    // --------------------------------------------------------
+
+    setText(
         "currentRainfall",
         data.current_rainfall !== undefined
             ? `${data.current_rainfall} mm`
@@ -265,10 +322,6 @@ function updateWeather(data) {
     );
 
 
-    // --------------------------------------------------------
-    // EXTRA DETAILS
-    // --------------------------------------------------------
-
     setText(
         "detailHumidity",
         data.humidity !== undefined
@@ -282,14 +335,6 @@ function updateWeather(data) {
         data.wind_speed !== undefined
             ? `${Math.round(data.wind_speed)} km/h`
             : "--"
-    );
-
-
-    setText(
-        "uvIndex",
-        formatUV(
-            data.uv_index
-        )
     );
 
 
@@ -329,7 +374,7 @@ function updateWeather(data) {
 
 
     // --------------------------------------------------------
-    // AGRICULTURE ADVISORY
+    // AGRICULTURE
     // --------------------------------------------------------
 
     setText(
@@ -378,8 +423,6 @@ function updateWeather(data) {
 
     // --------------------------------------------------------
     // DYNAMIC BACKGROUND
-    // IMPORTANT:
-    // weather time + sunrise + sunset are passed here
     // --------------------------------------------------------
 
     updateWeatherBackground(
@@ -413,6 +456,7 @@ function createHourlyForecast(
         !container ||
         !hourly
     ) {
+
         return;
     }
 
@@ -434,6 +478,15 @@ function createHourlyForecast(
 
     const codes =
         hourly.weather_code || [];
+
+
+    if (!times.length) {
+
+        container.innerHTML =
+            "<p>No hourly forecast available.</p>";
+
+        return;
+    }
 
 
     let startIndex = 0;
@@ -473,7 +526,6 @@ function createHourlyForecast(
     }
 
 
-    // Show next 6 hours
     const endIndex =
         Math.min(
             startIndex + 6,
@@ -520,7 +572,7 @@ function createHourlyForecast(
 
             <strong>
                 ${Math.round(
-                    temperatures[i]
+                    temperatures[i] ?? 0
                 )}°
             </strong>
 
@@ -555,6 +607,7 @@ function createDailyForecast(
         !container ||
         !daily
     ) {
+
         return;
     }
 
@@ -642,11 +695,11 @@ function createDailyForecast(
 
             <strong>
                 ${Math.round(
-                    maxTemps[i]
+                    maxTemps[i] ?? 0
                 )}°
                 /
                 ${Math.round(
-                    minTemps[i]
+                    minTemps[i] ?? 0
                 )}°
             </strong>
 
@@ -671,9 +724,16 @@ function create15DayForecast(
     daily
 ) {
 
+    /*
+     * IMPORTANT:
+     * Cards go inside forecast15Grid.
+     * Do NOT use forecast15 itself because
+     * forecast15 is the complete section.
+     */
+
     const container =
         document.getElementById(
-            "forecast15"
+            "forecast15Grid"
         );
 
 
@@ -681,6 +741,7 @@ function create15DayForecast(
         !container ||
         !daily
     ) {
+
         return;
     }
 
@@ -708,12 +769,16 @@ function create15DayForecast(
         daily.weather_code || [];
 
 
-    for (
-        let i = 0;
-        i < Math.min(
+    const daysToShow =
+        Math.min(
             15,
             times.length
         );
+
+
+    for (
+        let i = 0;
+        i < daysToShow;
         i++
     ) {
 
@@ -766,11 +831,11 @@ function create15DayForecast(
 
             <strong>
                 ${Math.round(
-                    maxTemps[i]
+                    maxTemps[i] ?? 0
                 )}°
                 /
                 ${Math.round(
-                    minTemps[i]
+                    minTemps[i] ?? 0
                 )}°
             </strong>
 
@@ -986,13 +1051,9 @@ function useMyLocation() {
                         place.village;
 
 
-                    if (
-                        location
-                    ) {
+                    if (location) {
 
-                        if (
-                            locationInput
-                        ) {
+                        if (locationInput) {
 
                             locationInput.value =
                                 location;
@@ -1018,9 +1079,7 @@ function useMyLocation() {
                 }
 
 
-            } catch (
-                error
-            ) {
+            } catch (error) {
 
                 console.error(
                     error
@@ -1031,6 +1090,7 @@ function useMyLocation() {
                     "Unable to get your current location."
                 );
 
+
             } finally {
 
                 stopLoading();
@@ -1038,11 +1098,26 @@ function useMyLocation() {
         },
 
 
-        function () {
+        function (error) {
+
+            console.error(
+                "Geolocation error:",
+                error
+            );
+
 
             showError(
                 "Please allow location permission."
             );
+
+
+            stopLoading();
+        },
+
+        {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 300000
         }
     );
 }
@@ -1055,6 +1130,12 @@ function useMyLocation() {
 function updateAlert(
     alert
 ) {
+
+    const alertCard =
+        document.getElementById(
+            "alerts"
+        );
+
 
     if (!alert) {
 
@@ -1070,10 +1151,11 @@ function updateAlert(
         );
 
 
-        setText(
-            "alertLevel",
-            "Safe"
-        );
+        if (alertCard) {
+
+            alertCard.className =
+                "info-card alert safe";
+        }
 
 
         return;
@@ -1090,52 +1172,30 @@ function updateAlert(
     setText(
         "alertMessage",
         alert.message ||
-        ""
+        "Weather conditions are currently stable."
     );
 
 
-    let alertText =
-        "Safe";
+    let alertType =
+        alert.type ||
+        "safe";
 
 
     if (
-        alert.type ===
-        "warning"
+        alertType !== "warning" &&
+        alertType !== "danger" &&
+        alertType !== "safe"
     ) {
 
-        alertText =
-            "Warning";
+        alertType =
+            "safe";
     }
-
-
-    if (
-        alert.type ===
-        "danger"
-    ) {
-
-        alertText =
-            "Danger";
-    }
-
-
-    setText(
-        "alertLevel",
-        alertText
-    );
-
-
-    const alertCard =
-        document.getElementById(
-            "alertCard"
-        );
 
 
     if (alertCard) {
 
         alertCard.className =
-            `info-card alert ${
-                alert.type || "safe"
-            }`;
+            `info-card alert ${alertType}`;
     }
 }
 
@@ -1155,10 +1215,6 @@ function updateWeatherBackground(
     const body =
         document.body;
 
-
-    // --------------------------------------------------------
-    // REMOVE OLD CLASSES
-    // --------------------------------------------------------
 
     body.classList.remove(
 
@@ -1187,10 +1243,6 @@ function updateWeatherBackground(
         "weather-night-fog"
     );
 
-
-    // --------------------------------------------------------
-    // CHECK DAY / NIGHT
-    // --------------------------------------------------------
 
     let isNight =
         false;
@@ -1233,7 +1285,6 @@ function updateWeatherBackground(
     if (isNight) {
 
 
-        // Thunderstorm at night
         if (
             weatherCode >= 95 &&
             weatherCode <= 99
@@ -1243,12 +1294,10 @@ function updateWeatherBackground(
                 "weather-night-storm"
             );
 
-
             return;
         }
 
 
-        // Rain at night
         if (
             weatherCode >= 51 &&
             weatherCode <= 82
@@ -1258,12 +1307,10 @@ function updateWeatherBackground(
                 "weather-night-rain"
             );
 
-
             return;
         }
 
 
-        // Fog at night
         if (
             weatherCode >= 45 &&
             weatherCode <= 48
@@ -1273,16 +1320,13 @@ function updateWeatherBackground(
                 "weather-night-fog"
             );
 
-
             return;
         }
 
 
-        // Clear / cloudy night
         body.classList.add(
             "weather-night-clear"
         );
-
 
         return;
     }
@@ -1296,84 +1340,62 @@ function updateWeatherBackground(
         "weather-default";
 
 
-    // Clear
     if (
         weatherCode === 0
     ) {
 
         weatherClass =
             "weather-sunny";
-    }
 
-
-    // Cloudy
-    else if (
+    } else if (
         weatherCode >= 1 &&
         weatherCode <= 3
     ) {
 
         weatherClass =
             "weather-cloudy";
-    }
 
-
-    // Fog
-    else if (
+    } else if (
         weatherCode >= 45 &&
         weatherCode <= 48
     ) {
 
         weatherClass =
             "weather-fog";
-    }
 
-
-    // Rain / drizzle
-    else if (
+    } else if (
         weatherCode >= 51 &&
         weatherCode <= 67
     ) {
 
         weatherClass =
             "weather-rain";
-    }
 
-
-    // Snow
-    else if (
+    } else if (
         weatherCode >= 71 &&
         weatherCode <= 77
     ) {
 
         weatherClass =
             "weather-snow";
-    }
 
-
-    // Rain showers
-    else if (
+    } else if (
         weatherCode >= 80 &&
         weatherCode <= 82
     ) {
 
         weatherClass =
             "weather-rain";
-    }
 
-
-    // Snow showers
-    else if (
+    } else if (
         weatherCode >= 85 &&
         weatherCode <= 86
     ) {
 
         weatherClass =
             "weather-snow";
-    }
 
-
-    // Thunderstorm
-    else if (
+    } else if (
         weatherCode >= 95 &&
         weatherCode <= 99
     ) {
@@ -1390,51 +1412,444 @@ function updateWeatherBackground(
 
 
 // ============================================================
-// 15-DAY FORECAST BUTTON
+// 15-DAY FORECAST UI
 // ============================================================
 
-const fullForecast =
-    document.getElementById(
-        "fullForecast"
-    );
+function show15DayForecast() {
+
+    const forecast15 =
+        document.getElementById(
+            "forecast15"
+        );
 
 
-const forecast15 =
-    document.getElementById(
-        "forecast15"
-    );
+    const dailyForecast =
+        document.getElementById(
+            "dailyForecast"
+        );
 
 
-if (
-    fullForecast &&
-    forecast15
-) {
+    const sevenDayTab =
+        document.getElementById(
+            "sevenDayTab"
+        );
 
-    fullForecast.addEventListener(
-        "click",
-        function () {
 
-            forecast15.classList.toggle(
-                "show"
+    const fifteenDayTab =
+        document.getElementById(
+            "fifteenDayTab"
+        );
+
+
+    if (!forecast15) {
+        return;
+    }
+
+
+    forecast15.hidden =
+        false;
+
+
+    if (dailyForecast) {
+
+        dailyForecast.hidden =
+            true;
+    }
+
+
+    if (sevenDayTab) {
+
+        sevenDayTab.classList.remove(
+            "active"
+        );
+    }
+
+
+    if (fifteenDayTab) {
+
+        fifteenDayTab.classList.add(
+            "active"
+        );
+    }
+
+
+    forecast15.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+}
+
+
+// ============================================================
+// SHOW 7-DAY FORECAST
+// ============================================================
+
+function show7DayForecast() {
+
+    const forecast15 =
+        document.getElementById(
+            "forecast15"
+        );
+
+
+    const dailyForecast =
+        document.getElementById(
+            "dailyForecast"
+        );
+
+
+    const sevenDayTab =
+        document.getElementById(
+            "sevenDayTab"
+        );
+
+
+    const fifteenDayTab =
+        document.getElementById(
+            "fifteenDayTab"
+        );
+
+
+    if (forecast15) {
+
+        forecast15.hidden =
+            true;
+    }
+
+
+    if (dailyForecast) {
+
+        dailyForecast.hidden =
+            false;
+    }
+
+
+    if (fifteenDayTab) {
+
+        fifteenDayTab.classList.remove(
+            "active"
+        );
+    }
+
+
+    if (sevenDayTab) {
+
+        sevenDayTab.classList.add(
+            "active"
+        );
+    }
+
+
+    if (dailyForecast) {
+
+        dailyForecast.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+    }
+}
+
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+
+function setupNavigation() {
+
+    const navItems =
+        document.querySelectorAll(
+            ".nav-item"
+        );
+
+
+    navItems.forEach(
+        function (item) {
+
+            item.addEventListener(
+                "click",
+                function (event) {
+
+                    const targetId =
+                        item.getAttribute(
+                            "href"
+                        );
+
+
+                    if (
+                        !targetId ||
+                        !targetId.startsWith("#")
+                    ) {
+
+                        return;
+                    }
+
+
+                    const target =
+                        document.querySelector(
+                            targetId
+                        );
+
+
+                    if (!target) {
+
+                        return;
+                    }
+
+
+                    event.preventDefault();
+
+
+                    target.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+
+
+                    navItems.forEach(
+                        function (nav) {
+
+                            nav.classList.remove(
+                                "active"
+                            );
+                        }
+                    );
+
+
+                    item.classList.add(
+                        "active"
+                    );
+
+
+                    /*
+                     * Temporary focus effect
+                     */
+
+                    target.classList.remove(
+                        "navigation-focus"
+                    );
+
+
+                    setTimeout(
+                        function () {
+
+                            target.classList.add(
+                                "navigation-focus"
+                            );
+
+                        },
+                        50
+                    );
+
+
+                    setTimeout(
+                        function () {
+
+                            target.classList.remove(
+                                "navigation-focus"
+                            );
+
+                        },
+                        1200
+                    );
+                }
             );
-
-
-            if (
-                forecast15.classList.contains(
-                    "show"
-                )
-            ) {
-
-                fullForecast.textContent =
-                    "Hide 15-Day Forecast ↑";
-
-            } else {
-
-                fullForecast.textContent =
-                    "15-Day Weather Forecast →";
-            }
         }
     );
+
+
+    // --------------------------------------------------------
+    // NEXT 6 HOURS
+    // --------------------------------------------------------
+
+    const nextHoursBtn =
+        document.getElementById(
+            "nextHoursBtn"
+        );
+
+
+    if (nextHoursBtn) {
+
+        nextHoursBtn.addEventListener(
+            "click",
+            function (event) {
+
+                event.preventDefault();
+
+
+                const forecast =
+                    document.getElementById(
+                        "forecast"
+                    );
+
+
+                if (forecast) {
+
+                    forecast.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+                }
+            }
+        );
+    }
+
+
+    // --------------------------------------------------------
+    // AI CARD
+    // --------------------------------------------------------
+
+    const aiCard =
+        document.getElementById(
+            "aiInsights"
+        );
+
+
+    if (aiCard) {
+
+        aiCard.addEventListener(
+            "click",
+            function () {
+
+                aiCard.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center"
+                });
+            }
+        );
+    }
+
+
+    // --------------------------------------------------------
+    // AGRICULTURE CARD
+    // --------------------------------------------------------
+
+    const agricultureCard =
+        document.getElementById(
+            "agriculture"
+        );
+
+
+    if (agricultureCard) {
+
+        agricultureCard.addEventListener(
+            "click",
+            function () {
+
+                agricultureCard.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center"
+                });
+            }
+        );
+    }
+
+
+    // --------------------------------------------------------
+    // ALERT CARD
+    // --------------------------------------------------------
+
+    const alertCard =
+        document.getElementById(
+            "alerts"
+        );
+
+
+    if (alertCard) {
+
+        alertCard.addEventListener(
+            "click",
+            function () {
+
+                alertCard.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center"
+                });
+            }
+        );
+    }
+}
+
+
+// ============================================================
+// FORECAST BUTTONS
+// ============================================================
+
+function setupForecastButtons() {
+
+    const fullForecast =
+        document.getElementById(
+            "fullForecast"
+        );
+
+
+    const sevenDayTab =
+        document.getElementById(
+            "sevenDayTab"
+        );
+
+
+    const fifteenDayTab =
+        document.getElementById(
+            "fifteenDayTab"
+        );
+
+
+    const close15Day =
+        document.getElementById(
+            "close15Day"
+        );
+
+
+    if (fullForecast) {
+
+        fullForecast.addEventListener(
+            "click",
+            function () {
+
+                show15DayForecast();
+
+            }
+        );
+    }
+
+
+    if (fifteenDayTab) {
+
+        fifteenDayTab.addEventListener(
+            "click",
+            function () {
+
+                show15DayForecast();
+
+            }
+        );
+    }
+
+
+    if (sevenDayTab) {
+
+        sevenDayTab.addEventListener(
+            "click",
+            function () {
+
+                show7DayForecast();
+
+            }
+        );
+    }
+
+
+    if (close15Day) {
+
+        close15Day.addEventListener(
+            "click",
+            function () {
+
+                show7DayForecast();
+
+            }
+        );
+    }
 }
 
 
@@ -1453,8 +1868,13 @@ function showLoading() {
         true;
 
 
-    searchBtn.dataset.originalText =
-        searchBtn.innerHTML;
+    if (
+        !searchBtn.dataset.originalText
+    ) {
+
+        searchBtn.dataset.originalText =
+            searchBtn.innerHTML;
+    }
 
 
     searchBtn.innerHTML =
@@ -1536,8 +1956,7 @@ function setText(
     if (element) {
 
         element.textContent =
-            value ??
-            "--";
+            value ?? "--";
     }
 }
 
@@ -1715,13 +2134,25 @@ window.useMyLocation =
     useMyLocation;
 
 
+window.show15DayForecast =
+    show15DayForecast;
+
+
+window.show7DayForecast =
+    show7DayForecast;
+
+
 // ============================================================
-// DEFAULT LOCATION
+// INITIALIZE
 // ============================================================
 
 window.addEventListener(
     "DOMContentLoaded",
     function () {
+
+        setupNavigation();
+
+        setupForecastButtons();
 
         getWeather(
             "Pune"

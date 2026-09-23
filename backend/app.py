@@ -282,7 +282,186 @@ def status():
         "message": "WeatherWise Python Flask Backend is running"
     })
 
+# ============================================================
+# GOOGLE SEARCH / AI QUESTION API
+# ============================================================
 
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+GOOGLE_CX = os.getenv("GOOGLE_CX")
+
+
+@app.route("/api/ask", methods=["GET"])
+def ask_question():
+
+    question = request.args.get(
+        "question",
+        ""
+    ).strip()
+
+    if not question:
+
+        return jsonify({
+            "error": "Please enter a question."
+        }), 400
+
+
+    if not GOOGLE_API_KEY or not GOOGLE_CX:
+
+        return jsonify({
+            "error":
+                "Google Search API is not configured. "
+                "Please configure GOOGLE_API_KEY and GOOGLE_CX."
+        }), 500
+
+
+    try:
+
+        google_url = (
+            "https://www.googleapis.com/customsearch/v1"
+        )
+
+
+        params = {
+
+            "key": GOOGLE_API_KEY,
+
+            "cx": GOOGLE_CX,
+
+            "q": question,
+
+            "num": 5,
+
+            "safe": "active",
+
+            "gl": "in"
+
+        }
+
+
+        response = requests.get(
+            google_url,
+            params=params,
+            timeout=15
+        )
+
+
+        response.raise_for_status()
+
+
+        search_data = response.json()
+
+
+        items = search_data.get(
+            "items",
+            []
+        )
+
+
+        if not items:
+
+            return jsonify({
+
+                "question": question,
+
+                "answer":
+                    "I could not find relevant information "
+                    "on the web.",
+
+                "results": []
+
+            })
+
+
+        results = []
+
+
+        for item in items:
+
+            results.append({
+
+                "title":
+                    item.get(
+                        "title",
+                        "Untitled"
+                    ),
+
+                "snippet":
+                    item.get(
+                        "snippet",
+                        ""
+                    ),
+
+                "link":
+                    item.get(
+                        "link",
+                        ""
+                    )
+
+            })
+
+
+        # ----------------------------------------------------
+        # SIMPLE ANSWER FROM SEARCH SNIPPETS
+        # ----------------------------------------------------
+
+        answer_parts = []
+
+
+        for result in results[:3]:
+
+            if result["snippet"]:
+
+                answer_parts.append(
+                    result["snippet"]
+                )
+
+
+        answer = " ".join(
+            answer_parts
+        )
+
+
+        return jsonify({
+
+            "question": question,
+
+            "answer": answer,
+
+            "results": results
+
+        })
+
+
+    except requests.exceptions.RequestException as e:
+
+        print(
+            "Google Search API error:",
+            e
+        )
+
+
+        return jsonify({
+
+            "error":
+                "Unable to connect to Google Search."
+
+        }), 503
+
+
+    except Exception as e:
+
+        print(
+            "AI question error:",
+            e
+        )
+
+
+        return jsonify({
+
+            "error":
+                "Unable to answer the question."
+
+        }), 500
 # ============================================================
 # WEATHER API
 # ============================================================

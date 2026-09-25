@@ -39,8 +39,8 @@ if __name__ == "__main__":
     )
 
     print(
-        "Predicted Rainfall:",
-        result,
-        "mm"
-    )
+            "Predicted Rainfall:",
+            result,
+            "mm"
+        )
     

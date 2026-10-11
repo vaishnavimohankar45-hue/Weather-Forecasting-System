@@ -89,42 +89,6 @@
             </a>
 
 
-            <!-- AI INSIGHTS -->
-
-            <a
-                href="#aiInsights"
-                class="nav-item"
-            >
-
-                <span class="nav-icon">
-                    ◈
-                </span>
-
-                <span>
-                    AI Insights
-                </span>
-
-            </a>
-
-
-            <!-- AGRICULTURE -->
-
-            <a
-                href="#agriculture"
-                class="nav-item"
-            >
-
-                <span class="nav-icon">
-                    🌱
-                </span>
-
-                <span>
-                    Agriculture
-                </span>
-
-            </a>
-
-
             <!-- ALERTS -->
 
             <a
@@ -432,18 +396,27 @@
                     <h3>
                         Hourly Forecast
                     </h3>
-
-
-                    <a
-                        href="#forecast"
-                        id="nextHoursBtn"
-                    >
-                        Next 6 Hours →
-                    </a>
-
-
+                    <div>
+<button type="button" id="nextHoursBtn" class="arrow-button"
+        title="Next 6 Hours" aria-label="Next 6 Hours">
+    <svg class="double-arrow" viewBox="0 0 48 36" aria-hidden="true">
+        <path d="M3 3 L17 18 L3 33 L12 33 L26 18 L12 3 Z"
+              fill="#00cfff" stroke="#8ff5ff" stroke-width="1"/>
+        <path d="M20 3 L34 18 L20 33 L29 33 L43 18 L29 3 Z"
+              fill="#00aeea" stroke="#8ff5ff" stroke-width="1"/>
+    </svg>
+</button>
+<button type="button" id="currentHoursBtn" class="arrow-button"
+        title="Back to Now" aria-label="Back to Now">
+    <svg class="double-arrow back-arrow" viewBox="0 0 48 36" aria-hidden="true">
+        <path d="M3 3 L17 18 L3 33 L12 33 L26 18 L12 3 Z"
+              fill="#00cfff" stroke="#8ff5ff" stroke-width="1"/>
+        <path d="M20 3 L34 18 L20 33 L29 33 L43 18 L29 3 Z"
+              fill="#00aeea" stroke="#8ff5ff" stroke-width="1"/>
+    </svg>
+</button>
                 </div>
-
+</div>
 
                 <div
                     class="hourly-grid"
@@ -559,95 +532,6 @@
 
 
             </section>
-
-
-
-            <!-- =================================================
-                 AI + AGRICULTURE + ALERTS
-                 ================================================= -->
-
-            <section
-                class="bottom-grid"
-                id="insights"
-            >
-
-
-                <!-- =================================================
-                     AI INSIGHTS
-                     ================================================= -->
-
-                <div
-                    class="info-card ai"
-                    id="aiInsights"
-                    tabindex="0"
-                >
-
-
-                    <div class="info-icon">
-                        🤖
-                    </div>
-
-
-                    <div class="info-content">
-
-                        <small>
-                            AI Weather Insight
-                        </small>
-
-
-                        <p id="aiInsight">
-                            Loading weather insight...
-                        </p>
-
-                    </div>
-
-
-                    <span class="info-arrow">
-                        ›
-                    </span>
-
-
-                </div>
-
-
-
-                <!-- =================================================
-                     AGRICULTURE
-                     ================================================= -->
-
-                <div
-                    class="info-card agriculture"
-                    id="agriculture"
-                    tabindex="0"
-                >
-
-
-                    <div class="info-icon">
-                        🌱
-                    </div>
-
-
-                    <div class="info-content">
-
-                        <small>
-                            Agriculture Advisory
-                        </small>
-
-
-                        <p id="agricultureAdvice">
-                            Loading agriculture advice...
-                        </p>
-
-                    </div>
-
-
-                    <span class="info-arrow">
-                        ›
-                    </span>
-
-
-                </div>
-
 
 
                 <!-- =================================================

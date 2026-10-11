@@ -177,106 +177,62 @@ async function getWeather(location) {
     }
 }
 
-
 // ============================================================
 // UPDATE WEATHER
 // ============================================================
 
 function updateWeather(data) {
 
-
-    // --------------------------------------------------------
     // LOCATION
-    // --------------------------------------------------------
-
     setText(
         "locationName",
-        data.full_location ||
-        data.location ||
-        "--"
+        data.full_location || data.location || "--"
     );
-
 
     setText(
         "country",
-        data.country ||
-        ""
+        data.country || ""
     );
-
 
     setText(
         "currentDate",
-        formatDate(
-            data.weather_time
-        )
+        formatDate(data.weather_time)
     );
 
-
-    // --------------------------------------------------------
     // CURRENT WEATHER
-    // --------------------------------------------------------
-
     setText(
         "weatherIcon",
-        data.weather_icon ||
-        "🌤️"
+        data.weather_icon || "🌤️"
     );
-
 
     setText(
         "weatherCondition",
-        data.weather_description ||
-        "--"
+        data.weather_description || "--"
     );
-
 
     setText(
         "temperature",
         data.temperature !== undefined
-            ? `${Math.round(data.temperature)}°C`
-            : "--"
+        ? `${Math.round(data.temperature)}°C`
+        : "--"
     );
-
 
     setText(
         "feelsLike",
         data.feels_like !== undefined
-            ? `Feels like ${Math.round(data.feels_like)}°C`
+            ? `Feels like ${Math.round(data.feels_like)}°C` 
             : "--"
     );
 
-
-    // --------------------------------------------------------
     // SUNRISE / SUNSET
-    // --------------------------------------------------------
+    setText("sunrise", formatTime(data.sunrise));
+    setText("sunset", formatTime(data.sunset));
 
-    setText(
-        "sunrise",
-        formatTime(
-            data.sunrise
-        )
-    );
-
-
-    setText(
-        "sunset",
-        formatTime(
-            data.sunset
-        )
-    );
-
-
-    // --------------------------------------------------------
     // WEATHER STATS
-    // --------------------------------------------------------
-
     setText(
         "humidity",
-        data.humidity !== undefined
-            ? `${data.humidity}%`
-            : "--"
+        data.humidity !== undefined ? `${data.humidity}%` : "--"
     );
-
 
     setText(
         "windSpeed",
@@ -285,7 +241,6 @@ function updateWeather(data) {
             : "--"
     );
 
-
     setText(
         "rainfall",
         data.current_rainfall !== undefined
@@ -293,19 +248,9 @@ function updateWeather(data) {
             : "--"
     );
 
+    setText("uvIndex", formatUV(data.uv_index));
 
-    setText(
-        "uvIndex",
-        formatUV(
-            data.uv_index
-        )
-    );
-
-
-    // --------------------------------------------------------
     // EXTRA DETAILS
-    // --------------------------------------------------------
-
     setText(
         "currentRainfall",
         data.current_rainfall !== undefined
@@ -313,118 +258,67 @@ function updateWeather(data) {
             : "--"
     );
 
-
     setText(
         "predictedRainfall",
         data.predicted_rainfall !== undefined
-            ? `${Number(data.predicted_rainfall).toFixed(1)} mm`
-            : "--"
+            ? `${Number(data.predicted_rainfall).toFixed(1)} mm`: "--"
     );
-
 
     setText(
         "detailHumidity",
-        data.humidity !== undefined
-            ? `${data.humidity}%`
-            : "--"
+        data.humidity !== undefined ? `
+        ${data.humidity}%` : "--"
     );
-
 
     setText(
         "detailWind",
         data.wind_speed !== undefined
-            ? `${Math.round(data.wind_speed)} km/h`
-            : "--"
+            ? `${Math.round(data.wind_speed)} km/h`: "--"
     );
 
-
-    setText(
-        "visibility",
-        formatVisibility(
-            data.visibility
-        )
-    );
-
+    setText("visibility", formatVisibility(data.visibility));
 
     setText(
         "pressure",
         data.pressure !== undefined
-            ? `${data.pressure} hPa`
-            : "--"
+            ? `${data.pressure} hPa`: "--"
     );
-
 
     setText(
         "detailRainfall",
-        data.precipitation_probability !== undefined
-            ? `${data.precipitation_probability}%`
-            : "--"
+        data.precipitation_probability !== undefined? `
+        ${data.precipitation_probability}%`: "--"
     );
 
 
-    // --------------------------------------------------------
-    // AI INSIGHT
-    // --------------------------------------------------------
-
-    setText(
-        "aiInsight",
-        data.ai_insight ||
-        "Weather insight is currently unavailable."
-    );
-
-
-    // --------------------------------------------------------
-    // AGRICULTURE
-    // --------------------------------------------------------
-
-    setText(
-        "agricultureAdvice",
-        data.agriculture_advice ||
-        "Agriculture advice is currently unavailable."
-    );
-
-
-    // --------------------------------------------------------
     // WEATHER ALERT
-    // --------------------------------------------------------
+    updateAlert(data.alert);
 
-    updateAlert(
-        data.alert
-    );
-
-
-    // --------------------------------------------------------
+    // ========================================================
     // HOURLY FORECAST
-    // --------------------------------------------------------
-
+    // ========================================================
     createHourlyForecast(
         data.hourly,
         data.weather_time
     );
 
-
-    // --------------------------------------------------------
+    // ========================================================
     // 7-DAY FORECAST
-    // --------------------------------------------------------
-
+    // ========================================================
     createDailyForecast(
         data.daily
     );
 
-
-    // --------------------------------------------------------
+    // ========================================================
     // 15-DAY FORECAST
-    // --------------------------------------------------------
-
+    // ========================================================
     create15DayForecast(
         data.daily
     );
 
-
-    // --------------------------------------------------------
+    // ========================================================
     // DYNAMIC BACKGROUND
-    // --------------------------------------------------------
-
+    // ========================================================
     updateWeatherBackground(
         data.weather_code,
         data.weather_time,
@@ -432,136 +326,78 @@ function updateWeather(data) {
         data.sunset
     );
 
-
+    // HIDE OLD ERROR AFTER SUCCESS
     hideError();
 }
-
-
 // ============================================================
-// HOURLY FORECAST
+// HOURLY FORECAST + NEXT 6 HOURS
 // ============================================================
 
-function createHourlyForecast(
-    hourly,
-    currentTime
-) {
+let hourlyForecastState = {
+    hourly: null,
+    startIndex: 0,
+    initialStartIndex: 0
+};
 
-    const container =
-        document.getElementById(
-            "hourlyContainer"
-        );
+function createHourlyForecast(hourly, currentTime) {
+    const container = document.getElementById("hourlyContainer");
 
+    if (!container) return;
 
-    if (
-        !container ||
-        !hourly
-    ) {
-
+    if (!hourly || !hourly.time || hourly.time.length === 0) {
+        container.innerHTML = "<p>No hourly forecast available.</p>";
         return;
     }
-
-
-    container.innerHTML = "";
-
-
-    const times =
-        hourly.time || [];
-
-
-    const temperatures =
-        hourly.temperature_2m || [];
-
-
-    const probabilities =
-        hourly.precipitation_probability || [];
-
-
-    const codes =
-        hourly.weather_code || [];
-
-
-    if (!times.length) {
-
-        container.innerHTML =
-            "<p>No hourly forecast available.</p>";
-
-        return;
-    }
-
 
     let startIndex = 0;
 
+    if (currentTime) {
+        const currentHour = currentTime.substring(0, 13);
 
-    // Find current hour
-    if (
-        currentTime &&
-        times.length > 0
-    ) {
+        const foundIndex = hourly.time.findIndex(function (time) {
+            return time.substring(0, 13) >= currentHour;
+        });
 
-        const currentHour =
-            currentTime.substring(
-                0,
-                13
-            );
-
-
-        for (
-            let i = 0;
-            i < times.length;
-            i++
-        ) {
-
-            if (
-                times[i].substring(
-                    0,
-                    13
-                ) >= currentHour
-            ) {
-
-                startIndex = i;
-
-                break;
-            }
+        if (foundIndex !== -1) {
+            startIndex = foundIndex;
         }
     }
 
+    hourlyForecastState = {
+        hourly: hourly,
+        startIndex: startIndex,
+        initialStartIndex: startIndex
+    };
 
-    const endIndex =
-        Math.min(
-            startIndex + 6,
-            times.length
-        );
+    renderHourlyForecast();
+}
 
+function renderHourlyForecast() {
+    const container = document.getElementById("hourlyContainer");
+    const hourly = hourlyForecastState.hourly;
 
-    for (
-        let i = startIndex;
-        i < endIndex;
-        i++
-    ) {
+    if (!container || !hourly) return;
 
-        const weather =
-            getWeatherIcon(
-                codes[i] ?? 0
-            );
+    container.innerHTML = "";
 
+    const times = hourly.time || [];
+    const temperatures = hourly.temperature_2m || [];
+    const probabilities = hourly.precipitation_probability || [];
+    const codes = hourly.weather_code || [];
 
-        const card =
-            document.createElement(
-                "div"
-            );
+    const start = hourlyForecastState.startIndex;
+    const end = Math.min(start + 6, times.length);
 
+    for (let i = start; i < end; i++) {
+        const weather = getWeatherIcon(codes[i] ?? 0);
+        const card = document.createElement("div");
 
-        card.className =
-            "hour-card";
-
+        card.className = "hour-card";
 
         const label =
-            i === startIndex
+            i === hourlyForecastState.initialStartIndex
                 ? "Now"
-                : formatHour(
-                    times[i]
-                );
-
+                : formatHour(times[i]);
 
         card.innerHTML = `
             <b>${label}</b>
@@ -571,9 +407,7 @@ function createHourlyForecast(
             </span>
 
             <strong>
-                ${Math.round(
-                    temperatures[i] ?? 0
-                )}°
+                ${Math.round(temperatures[i] ?? 0)}°
             </strong>
 
             <small>
@@ -581,14 +415,39 @@ function createHourlyForecast(
             </small>
         `;
 
-
-        container.appendChild(
-            card
-        );
+        container.appendChild(card);
     }
 }
+function showNextSixHours() {
+    const times = hourlyForecastState.hourly?.time || [];
 
+    if (!times.length) {
+        showError("Hourly forecast is not available yet.");
+        return;
+    }
 
+    const nextIndex = hourlyForecastState.startIndex + 6;
+
+    if (nextIndex >= times.length) {
+        showError("No more hourly forecast available.");
+        return;
+    }
+
+    hourlyForecastState.startIndex = nextIndex;
+    renderHourlyForecast();
+}
+function showCurrentHours() {
+    if (!hourlyForecastState.hourly) {
+        showError("Hourly forecast is not available yet.");
+        return;
+    }
+
+    hourlyForecastState.startIndex =
+        hourlyForecastState.initialStartIndex;
+
+    hideError();
+    renderHourlyForecast();
+}
 // ============================================================
 // 7-DAY FORECAST
 // ============================================================
@@ -823,16 +682,17 @@ function create15DayForecast(
 
 
         card.innerHTML = `
-            <b>${dayName}</b>
+            <b>${dayName}
+            </b>
 
-            <span>
-                ${weather.icon}
-            </span>
+<span>
+     ${weather.icon}
+</span>
 
-            <strong>
-                ${Math.round(
-                    maxTemps[i] ?? 0
-                )}°
+<strong>
+${Math.round(
+maxTemps[i] ?? 0
+)}°
                 /
                 ${Math.round(
                     minTemps[i] ?? 0
@@ -987,62 +847,32 @@ function getWeatherIcon(
     };
 }
 
-
 // ============================================================
 // USE MY LOCATION
 // ============================================================
 
 function useMyLocation() {
-
-    if (
-        !navigator.geolocation
-    ) {
-
-        showError(
-            "Geolocation is not supported by your browser."
-        );
-
+    if (!navigator.geolocation) {
+        showError("Geolocation is not supported by your browser.");
         return;
     }
 
-
     showLoading();
 
-
     navigator.geolocation.getCurrentPosition(
-
-        async function (
-            position
-        ) {
-
-            const latitude =
-                position.coords.latitude;
-
-
-            const longitude =
-                position.coords.longitude;
-
+        async function (position) {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
 
             try {
+                const response = await fetch(
+                    `https://geocoding-api.open-meteo.com/v1/reverse?latitude=${latitude}&longitude=${longitude}&language=en&format=json`
+                );
 
-                const response =
-                    await fetch(
-                        `https://geocoding-api.open-meteo.com/v1/reverse?latitude=${latitude}&longitude=${longitude}&language=en&format=json`
-                    );
+                const data = await response.json();
 
-
-                const data =
-                    await response.json();
-
-
-                if (
-                    data.results &&
-                    data.results.length > 0
-                ) {
-
-                    const place =
-                        data.results[0];
-
+                if (data.results && data.results.length > 0) {
+                    const place = data.results[0];
 
                     const location =
                         place.name ||
@@ -1050,70 +880,30 @@ function useMyLocation() {
                         place.town ||
                         place.village;
 
-
                     if (location) {
-
                         if (locationInput) {
-
-                            locationInput.value =
-                                location;
+                            locationInput.value = location;
                         }
 
-
-                        await getWeather(
-                            location
-                        );
-
+                        await getWeather(location);
                     } else {
-
-                        showError(
-                            "Unable to identify your location."
-                        );
+                        showError("Unable to identify your location.");
                     }
-
                 } else {
-
-                    showError(
-                        "Unable to identify your location."
-                    );
+                    showError("Unable to identify your location.");
                 }
-
-
             } catch (error) {
-
-                console.error(
-                    error
-                );
-
-
-                showError(
-                    "Unable to get your current location."
-                );
-
-
+                console.error("Location error:", error);
+                showError("Unable to get your current location.");
             } finally {
-
                 stopLoading();
             }
         },
-
-
         function (error) {
-
-            console.error(
-                "Geolocation error:",
-                error
-            );
-
-
-            showError(
-                "Please allow location permission."
-            );
-
-
+            console.error("Geolocation error:", error);
+            showError("Please allow location permission.");
             stopLoading();
         },
-
         {
             enableHighAccuracy: true,
             timeout: 10000,
@@ -1121,6 +911,8 @@ function useMyLocation() {
         }
     );
 }
+
+
 
 
 // ============================================================
@@ -1657,93 +1449,32 @@ function setupNavigation() {
     );
 
 
-    // --------------------------------------------------------
-    // NEXT 6 HOURS
-    // --------------------------------------------------------
+// --------------------------------------------------------
+// NEXT 6 HOURS BUTTON
+// --------------------------------------------------------
 
-    const nextHoursBtn =
-        document.getElementById(
-            "nextHoursBtn"
-        );
+const nextHoursBtn = document.getElementById("nextHoursBtn");
 
+if (nextHoursBtn) {
+    nextHoursBtn.addEventListener("click", function (event) {
+        event.preventDefault();
+        showNextSixHours();
+    });
+}
 
-    if (nextHoursBtn) {
+  // --------------------------------------------------------
+// BACK TO CURRENT HOURS BUTTON
+// --------------------------------------------------------
 
-        nextHoursBtn.addEventListener(
-            "click",
-            function (event) {
+const currentHoursBtn =
+    document.getElementById("currentHoursBtn");
 
-                event.preventDefault();
-
-
-                const forecast =
-                    document.getElementById(
-                        "forecast"
-                    );
-
-
-                if (forecast) {
-
-                    forecast.scrollIntoView({
-                        behavior: "smooth",
-                        block: "start"
-                    });
-                }
-            }
-        );
-    }
-
-
-    // --------------------------------------------------------
-    // AI CARD
-    // --------------------------------------------------------
-
-    const aiCard =
-        document.getElementById(
-            "aiInsights"
-        );
-
-
-    if (aiCard) {
-
-        aiCard.addEventListener(
-            "click",
-            function () {
-
-                aiCard.scrollIntoView({
-                    behavior: "smooth",
-                    block: "center"
-                });
-            }
-        );
-    }
-
-
-    // --------------------------------------------------------
-    // AGRICULTURE CARD
-    // --------------------------------------------------------
-
-    const agricultureCard =
-        document.getElementById(
-            "agriculture"
-        );
-
-
-    if (agricultureCard) {
-
-        agricultureCard.addEventListener(
-            "click",
-            function () {
-
-                agricultureCard.scrollIntoView({
-                    behavior: "smooth",
-                    block: "center"
-                });
-            }
-        );
-    }
-
-
+if (currentHoursBtn) {
+    currentHoursBtn.addEventListener("click", function (event) {
+        event.preventDefault();
+        showCurrentHours();
+    });
+}  
     // --------------------------------------------------------
     // ALERT CARD
     // --------------------------------------------------------
@@ -2159,4 +1890,4 @@ window.addEventListener(
         );
 
     }
-);
+);    
